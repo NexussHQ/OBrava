@@ -1,9 +1,8 @@
 ---
 // BrandMark.astro
-// Logo integrado: [monograma 3D] + "OB" (ladrillo) + "RAVA" (blanco)
-// Usado en Header y Footer, en lugar de imágenes PNG.
-// Tamaños: sm (header mobile), md (header desktop), lg (footer)
-import OBMonogram from './OBMonogram.astro';
+// Logo integrado para Header y Footer.
+// Render: [monograma 3D real PNG recortado, sin texto] + "OB" (ladrillo) + "RAVA" (blanco)
+import monogramMark from '../assets/logos/ob-monogram-3d-mark.png';
 
 export interface Props {
   size?: 'sm' | 'md' | 'lg';
@@ -13,10 +12,11 @@ export interface Props {
 
 const { size = 'md', showWordmark = true, className = '' } = Astro.props;
 
+// Altura del monograma PNG (mantiene ratio 1024:645 = ~1.587:1)
 const sizeMap = {
-  sm: { monogram: 36, text: 'text-xl sm:text-2xl', gap: 'gap-2' },
-  md: { monogram: 48, text: 'text-2xl sm:text-3xl', gap: 'gap-3' },
-  lg: { monogram: 64, text: 'text-3xl sm:text-4xl md:text-5xl', gap: 'gap-3 sm:gap-4' },
+  sm: { height: 36,  text: 'text-xl',          gap: 'gap-2',     textOffset: '' },
+  md: { height: 56,  text: 'text-2xl sm:text-3xl', gap: 'gap-3', textOffset: 'pt-1' },
+  lg: { height: 88,  text: 'text-3xl sm:text-4xl md:text-5xl', gap: 'gap-4 sm:gap-5', textOffset: 'pt-2' },
 } as const;
 const cfg = sizeMap[size];
 ---
@@ -26,12 +26,22 @@ const cfg = sizeMap[size];
   class:list={['brand-mark group inline-flex items-center shrink-0', cfg.gap, className]}
   aria-label="OBrava · Inicio"
 >
-  <OBMonogram variant="logo" size={cfg.monogram} />
+  <img
+    src={monogramMark.src}
+    alt="Monograma OB · ObraBrava"
+    class="block w-auto"
+    style={`height: ${cfg.height}px;`}
+    width={monogramMark.width}
+    height={monogramMark.height}
+    decoding="async"
+    loading="eager"
+  />
   {showWordmark && (
     <span
       class:list={[
         'font-display font-black tracking-tight leading-none uppercase whitespace-nowrap',
         cfg.text,
+        cfg.textOffset,
       ]}
     >
       <span class="text-obrava-orange">OB</span><span class="text-obrava-white">RAVA</span>

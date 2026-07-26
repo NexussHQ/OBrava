@@ -1,7 +1,8 @@
 ---
 // BrandMark.astro
 // Logo integrado para Header y Footer.
-// Render: [monograma 3D real PNG recortado, sin texto] + "OB" (ladrillo) + "RAVA" (blanco)
+// Render: [monograma 3D PNG recortado, sin texto] + "OB" (ladrillo) + "RAVA" (blanco)
+// Centrado vertical con flex items-center + línea-baseline del texto alineada al monograma.
 import monogramMark from '../assets/logos/ob-monogram-3d-mark.png';
 
 export interface Props {
@@ -12,18 +13,21 @@ export interface Props {
 
 const { size = 'md', showWordmark = true, className = '' } = Astro.props;
 
-// Altura del monograma PNG (mantiene ratio 1024:645 = ~1.587:1)
+// Altura del monograma PNG (ratio 1024:645 = ~1.587:1)
+// El texto se alinea con items-center. Como el texto Inter Black uppercase
+// tiene ascent alto, usamos baseline-shift/translate para que el centro
+// visual del texto coincida con el centro del monograma.
 const sizeMap = {
-  sm: { height: 36,  text: 'text-xl',          gap: 'gap-2',     textOffset: '' },
-  md: { height: 56,  text: 'text-2xl sm:text-3xl', gap: 'gap-3', textOffset: 'pt-1' },
-  lg: { height: 88,  text: 'text-3xl sm:text-4xl md:text-5xl', gap: 'gap-4 sm:gap-5', textOffset: 'pt-2' },
+  sm: { height: 40,  text: 'text-xl',          textOffsetY: -2 },
+  md: { height: 56,  text: 'text-2xl sm:text-3xl', textOffsetY: -3 },
+  lg: { height: 88,  text: 'text-3xl sm:text-4xl md:text-5xl', textOffsetY: -5 },
 } as const;
 const cfg = sizeMap[size];
 ---
 
 <a
   href="/"
-  class:list={['brand-mark group inline-flex items-center shrink-0', cfg.gap, className]}
+  class:list={['brand-mark group inline-flex items-center shrink-0 gap-2 sm:gap-3', className]}
   aria-label="OBrava · Inicio"
 >
   <img
@@ -39,10 +43,10 @@ const cfg = sizeMap[size];
   {showWordmark && (
     <span
       class:list={[
-        'font-display font-black tracking-tight leading-none uppercase whitespace-nowrap',
+        'font-display font-black tracking-tight leading-[0.85] uppercase whitespace-nowrap',
         cfg.text,
-        cfg.textOffset,
       ]}
+      style={`transform: translateY(${cfg.textOffsetY}px);`}
     >
       <span class="text-obrava-orange">OB</span><span class="text-obrava-white">RAVA</span>
     </span>

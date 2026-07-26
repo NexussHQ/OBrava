@@ -1,9 +1,12 @@
 ---
 // src/pages/index.astro
-// OBrava · Landing principal (v2.1)
-// Animaciones: data-reveal en secciones estratégicas (fade-up, fade-left/right, scale, rotate, pop).
+// OBrava · Landing principal (v2.4)
+// Hero:
+//  - Mobile (<lg): AlbanilAnimation (SVG animado ligero)
+//  - Desktop (≥lg): monograma 3D del banner (identidad de marca fuerte)
 import BaseLayout from '../layouts/BaseLayout.astro';
-import monogram3d from '../assets/logos/ob-monogram-3d.png';
+import AlbanilAnimation from '../components/AlbanilAnimation.astro';
+import monogram3dMark from '../assets/logos/ob-monogram-3d-mark.png';
 
 const whatsappLink = (msg: string) =>
   `https://wa.me/5352622265?text=${encodeURIComponent(msg)}`;
@@ -180,19 +183,24 @@ const faqs = [
           Respondemos en menos de 2h · Visita gratis
         </p>
       </div>
-      <div class="lg:col-span-5 hidden lg:flex justify-center items-center relative" data-reveal="scale" data-reveal-duration="1100" data-reveal-delay="200">
-        <div class="border-8 border-obrava-orange shadow-brutal p-3 bg-obrava-black" data-parallax="0.08">
+      <div class="lg:col-span-5 flex justify-center items-center relative" data-reveal="scale" data-reveal-duration="900" data-reveal-delay="200">
+        <!-- Mobile: AlbanilAnimation (SVG animado, ligero) -->
+        <div class="lg:hidden border-8 border-obrava-orange shadow-brutal p-3 sm:p-4 bg-obrava-black max-w-[280px]">
+          <AlbanilAnimation className="max-w-full" />
+        </div>
+        <!-- Desktop: monograma 3D del banner (identidad de marca) -->
+        <div class="hidden lg:block border-8 border-obrava-orange shadow-brutal p-3 sm:p-6 bg-obrava-black">
           <img
-            src={monogram3d.src}
+            src={monogram3dMark.src}
             alt="Monograma 3D OBrava — O naranja entrelazada con B de acero"
-            class="w-full h-auto max-w-md float-slow"
-            width={monogram3d.width}
-            height={monogram3d.height}
+            class="w-full h-auto max-w-md"
+            width={monogram3dMark.width}
+            height={monogram3dMark.height}
             loading="eager"
             decoding="async"
           />
         </div>
-        <div class="absolute -top-4 -right-4 hidden xl:block bg-obrava-orange text-obrava-black font-display font-black uppercase text-xs px-3 py-1 border-4 border-obrava-black shadow-brutal-white" data-reveal="rotate" data-reveal-delay="700">
+        <div class="absolute -top-4 -right-4 bg-obrava-orange text-obrava-black font-display font-black uppercase text-[10px] sm:text-xs px-2 sm:px-3 py-1 border-4 border-obrava-black shadow-brutal-white" data-reveal="rotate" data-reveal-delay="700">
           La Habana · 2026
         </div>
       </div>

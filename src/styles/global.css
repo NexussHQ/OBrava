@@ -1,0 +1,177 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* OBrava · Global Styles
+ * Manual de marca v1.0 — Neo-brutalist (sharp 0), Construction Orange + Deep Charcoal + Technical White.
+ * v2.0 — Landing editorial con contenido enriquecido (servicios, proceso, embajadores, FAQ, FAB WhatsApp).
+ */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-obrava-black text-obrava-white;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Locked zero-radii per brand (except FAB which is a circle) */
+  *:not(.wa-fab):not(.wa-fab *):not(rounded-full) {
+    border-radius: 0 !important;
+  }
+
+  /* Typography */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-black uppercase tracking-tight;
+    font-style: normal;
+  }
+
+  h1 { @apply text-headline-lg-mobile md:text-headline-lg; }
+  h2 { @apply text-headline-md md:text-headline-md; }
+  h3 { @apply text-headline-sm; }
+  h4 { @apply text-xl; }
+
+  p {
+    @apply text-body-md leading-relaxed;
+  }
+
+  /* Focus visible — instant ring */
+  :focus-visible {
+    outline: 3px solid #f26522;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: #f26522;
+    color: #000000;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* === Neo-brutalist button — primary === */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-obrava-orange text-obrava-black
+           font-display font-black uppercase tracking-wider
+           px-6 sm:px-8 py-3 sm:py-4
+           text-sm sm:text-base
+           border-4 border-obrava-orange
+           shadow-brutal-white
+           transition-all duration-150
+           hover:shadow-brutal-small-white
+           hover:translate-x-1 hover:translate-y-1
+           active:translate-x-1 active:translate-y-1
+           focus-visible:outline-obrava-orange;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-obrava-black text-obrava-white
+           font-display font-black uppercase tracking-wider
+           px-6 sm:px-8 py-3 sm:py-4
+           text-sm sm:text-base
+           border-4 border-obrava-white
+           shadow-brutal
+           transition-all duration-150
+           hover:shadow-brutal-small
+           hover:translate-x-1 hover:translate-y-1;
+  }
+
+  .btn-ghost-orange {
+    @apply inline-flex items-center justify-center gap-2
+           bg-obrava-black text-obrava-orange
+           font-display font-black uppercase tracking-wider
+           px-6 sm:px-8 py-3 sm:py-4
+           text-sm sm:text-base
+           border-4 border-obrava-orange
+           shadow-brutal
+           transition-all duration-150
+           hover:shadow-brutal-small
+           hover:translate-x-1 hover:translate-y-1;
+  }
+
+  /* === Section wrapper === */
+  .section {
+    @apply py-16 sm:py-20 lg:py-24 border-b-8 border-obrava-orange;
+  }
+
+  .section-tight {
+    @apply py-12 sm:py-16 lg:py-20 border-b-8 border-obrava-orange;
+  }
+
+  .container-brand {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* === Hard panel — pushed card with orange offset === */
+  .panel {
+    @apply bg-obrava-gray border-4 border-obrava-orange p-6 sm:p-8 shadow-brutal;
+  }
+
+  .panel-dark {
+    @apply bg-obrava-black border-4 border-obrava-orange p-6 sm:p-8 shadow-brutal;
+  }
+
+  /* === Eyebrow / Section label === */
+  .eyebrow {
+    @apply inline-block bg-obrava-black text-obrava-orange
+           font-mono text-xs uppercase tracking-wider
+           px-3 py-1 border-2 border-obrava-orange
+           mb-4;
+  }
+
+  /* === Service spec table (editorial) === */
+  .spec-list {
+    @apply divide-y-2 divide-obrava-silver border-t-2 border-b-2 border-obrava-silver;
+  }
+  .spec-list li {
+    @apply flex items-center justify-between py-3 font-display font-bold;
+  }
+  .spec-list li span:first-child {
+    @apply text-obrava-orange font-mono text-xs uppercase tracking-wider;
+  }
+  .spec-list li span:last-child {
+    @apply text-obrava-white font-display font-black uppercase;
+  }
+
+  /* === Editorial proof block === */
+  .proof-quote {
+    @apply text-2xl font-display font-black leading-tight text-obrava-white;
+  }
+  .proof-quote::before { content: "“"; @apply text-obrava-orange mr-1; }
+  .proof-quote::after  { content: "”"; @apply text-obrava-orange ml-1; }
+  .proof-attr {
+    @apply font-mono text-xs uppercase tracking-wider text-obrava-silver mt-4;
+  }
+  .proof-attr strong {
+    @apply text-obrava-white font-bold;
+  }
+
+  /* === Hard rule (typographic) === */
+  .rule-hair      { @apply border-t border-obrava-silver; }
+  .rule-hair-thick { @apply border-t-4 border-obrava-orange; }
+  .rule-hair-orange { @apply border-t-2 border-obrava-orange; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty  { text-wrap: pretty; }
+}

@@ -1,0 +1,156 @@
+---
+// src/pages/contacto.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const whatsappLink = (msg: string) =>
+  `https://wa.me/5352622265?text=${encodeURIComponent(msg)}`;
+
+const channels = [
+  {
+    label: 'WhatsApp',
+    value: '+53 526 222 65',
+    href: 'https://wa.me/5352622265',
+    icon: 'whatsapp',
+    note: 'Respuesta en menos de 2h',
+    primary: true,
+  },
+  {
+    label: 'Email',
+    value: 'sandyllerena77@gmail.com',
+    href: 'mailto:sandyllerena77@gmail.com',
+    icon: 'email',
+    note: 'Para presupuestos formales',
+    primary: false,
+  },
+  {
+    label: 'Teléfono',
+    value: '052 622 265',
+    href: 'tel:+5352622265',
+    icon: 'phone',
+    note: 'Lun–Sáb · 8h–18h',
+    primary: false,
+  },
+  {
+    label: 'Ubicación',
+    value: 'La Habana, Cuba',
+    href: null,
+    icon: 'place',
+    note: 'Toda La Habana y municipios cercanos',
+    primary: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Contacto"
+  description="OBrava · Escríbenos por WhatsApp al +53 526 222 65, email sandyllerena77@gmail.com o llámanos al 052 622 265. Respondemos en menos de 2h. La Habana, Cuba."
+>
+  <section class="bg-obrava-black border-b-8 border-obrava-orange py-12 sm:py-16">
+    <div class="container-brand">
+      <span class="eyebrow">Contacto</span>
+      <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-6 text-balance">
+        <span class="text-obrava-white">Escríbenos. </span><span class="text-obrava-orange">Respondemos.</span>
+      </h1>
+      <p class="text-lg sm:text-xl text-obrava-white font-display font-bold max-w-3xl">
+        Cuéntanos qué necesitas. Te respondemos en menos de 2 horas. La visita para cotizar es gratis y sin compromiso.
+      </p>
+    </div>
+  </section>
+
+  <section class="section bg-obrava-gray">
+    <div class="container-brand">
+      <div class="grid sm:grid-cols-2 gap-6">
+        {channels.map((c) => (
+          <div class:list={[
+            'p-6 sm:p-8 border-4 shadow-brutal flex flex-col gap-3',
+            c.primary
+              ? 'bg-obrava-orange text-obrava-black border-obrava-orange'
+              : 'bg-obrava-black text-obrava-white border-obrava-orange',
+          ]}>
+            <p class:list={[
+              'font-mono text-xs uppercase tracking-wider',
+              c.primary ? 'text-obrava-black' : 'text-obrava-orange',
+            ]}>
+              {c.label}
+            </p>
+            {c.href ? (
+              <a
+                href={c.href}
+                class:list={[
+                  'text-2xl sm:text-3xl font-display font-black break-all hover:underline',
+                  c.primary ? 'text-obrava-black' : 'text-obrava-white',
+                ]}
+              >
+                {c.value}
+              </a>
+            ) : (
+              <p class:list={[
+                'text-2xl sm:text-3xl font-display font-black',
+                c.primary ? 'text-obrava-black' : 'text-obrava-white',
+              ]}>
+                {c.value}
+              </p>
+            )}
+            <p class:list={[
+              'font-mono text-xs uppercase tracking-wider',
+              c.primary ? 'text-obrava-black' : 'text-obrava-silver',
+            ]}>
+              {c.note}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bg-obrava-black">
+    <div class="container-brand grid lg:grid-cols-2 gap-10 lg:gap-12 items-start">
+      <div>
+        <span class="eyebrow">Lo que necesitás saber</span>
+        <h2 class="text-3xl sm:text-4xl font-black tracking-tight mb-6 text-obrava-orange text-balance">
+          Antes de escribirnos.
+        </h2>
+        <ul class="space-y-4 font-display text-base sm:text-lg text-obrava-white">
+          <li class="flex items-start gap-3">
+            <span class="shrink-0 w-7 h-7 bg-obrava-orange text-obrava-black font-display font-black flex items-center justify-center mt-0.5">1</span>
+            <span><strong class="text-obrava-orange">Cuéntanos qué necesitas.</strong> Una idea general del tipo de obra o reparación. Si tenés fotos, mejor.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="shrink-0 w-7 h-7 bg-obrava-orange text-obrava-black font-display font-black flex items-center justify-center mt-0.5">2</span>
+            <span><strong class="text-obrava-orange">Coordinamos la visita.</strong> Vamos a la obra, medimos, evaluamos. Sin costo.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="shrink-0 w-7 h-7 bg-obrava-orange text-obrava-black font-display font-black flex items-center justify-center mt-0.5">3</span>
+            <span><strong class="text-obrava-orange">Cotizamos por escrito.</strong> Precio, fecha, garantía. Firmado. Sin compromiso.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="shrink-0 w-7 h-7 bg-obrava-orange text-obrava-black font-display font-black flex items-center justify-center mt-0.5">4</span>
+            <span><strong class="text-obrava-orange">Construimos en la fecha.</strong> Si nos pasamos, lo compensamos. Si falla, garantía.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-obrava-orange text-obrava-black border-4 border-obrava-orange shadow-brutal p-6 sm:p-10 flex flex-col gap-6">
+        <span class="inline-block bg-obrava-black text-obrava-orange font-mono text-xs uppercase tracking-wider px-3 py-1 border-2 border-obrava-black self-start">
+          Vía rápida
+        </span>
+        <h3 class="text-2xl sm:text-3xl font-display font-black text-obrava-black text-balance">
+          Abrí WhatsApp y escribinos directo.
+        </h3>
+        <p class="text-obrava-black font-display font-bold text-base sm:text-lg">
+          Es el canal más rápido. Te respondemos Sandy o el equipo. Sin formularios, sin esperar.
+        </p>
+        <a href={whatsappLink('Hola OBrava, necesito un servicio')} class="inline-flex items-center justify-center bg-obrava-black text-obrava-orange font-display font-black uppercase tracking-wider px-8 py-4 border-4 border-obrava-black shadow-brutal-white hover:shadow-brutal-small-white hover:translate-x-1 hover:translate-y-1 transition-all text-base sm:text-lg">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6 mr-2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          Abrir WhatsApp
+        </a>
+        <div class="font-mono text-xs uppercase tracking-wider text-obrava-black border-t-2 border-obrava-black pt-4">
+          Lun–Sáb · 8h–18h<br>
+          WhatsApp 24/7 para clientes activos
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

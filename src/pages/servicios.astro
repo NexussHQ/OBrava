@@ -1,0 +1,276 @@
+---
+// src/pages/servicios.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const whatsappLink = (msg: string) =>
+  `https://wa.me/5352622265?text=${encodeURIComponent(msg)}`;
+
+type Service = {
+  id: string;
+  num: string;
+  title: string;
+  intro: string;
+  features: string[];
+  specs: Array<[string, string]>;
+  proof: { kind: 'quote' | 'stat' | 'list'; quote?: string; attr?: string; stat?: string; statNote?: string; list?: string[] };
+  flip: boolean;
+  whatsappMsg: string;
+};
+
+const services: Service[] = [
+  {
+    id: 'manitas',
+    num: '01',
+    title: 'Manitas OBrava',
+    intro: 'Para las reparaciones del día a día. Llegas, hablamos, lo arreglamos. Sin formulario, sin esperar tres semanas.',
+    features: [
+      'Plomería y goteras',
+      'Electricidad y enchufes',
+      'Cambio de cerraduras',
+      'Pintura de un cuarto',
+      'Instalación de equipos',
+    ],
+    specs: [
+      ['Plomería', '1 día'],
+      ['Electricidad', '1 día'],
+      ['Pintura (1 cuarto)', '1–2 días'],
+      ['Cerraduras', 'medio día'],
+    ],
+    proof: {
+      kind: 'quote',
+      quote: 'Vinieron a cambiar el sifón el mismo día. Lo que otras cuadrillas habrían estirado toda la semana, OBrava lo resolvió en una mañana.',
+      attr: 'Yudith P. · Centro Habana',
+    },
+    flip: false,
+    whatsappMsg: 'Hola, necesito un Manitas OBrava',
+  },
+  {
+    id: 'reforma',
+    num: '02',
+    title: 'Reforma OBrava',
+    intro: 'Renovamos baño, cocina, habitación. Materiales incluidos según presupuesto. Te lo entregamos por escrito y por fotos.',
+    features: [
+      'Reforma de baño completa',
+      'Remodelación de cocina',
+      'Pisos y Embaldosados',
+      'Pintura interior y exterior',
+      'Cambio de carpintería',
+    ],
+    specs: [
+      ['Reforma de baño', '5–10 días'],
+      ['Cocina', '1–2 semanas'],
+      ['Pisos y Embaldosados', 'según m²'],
+      ['Pintura interior', '3–7 días'],
+    ],
+    proof: {
+      kind: 'stat',
+      stat: '7 días',
+      statNote: 'reforma de baño completa, sin retrasos',
+    },
+    flip: true,
+    whatsappMsg: 'Hola, quiero reformar mi baño/cocina/habitación',
+  },
+  {
+    id: 'ampliacion',
+    num: '03',
+    title: 'Ampliación OBrava',
+    intro: 'Construimos el cuarto, balcón o segundo piso que tu familia necesita. Cimentación, obra gris, techo, instalaciones, entrega.',
+    features: [
+      'Construcción de cuarto',
+      'Balcón y galería',
+      'Segundo piso',
+      'Techos y cubiertas',
+      'Garantía estructural 5 años',
+    ],
+    specs: [
+      ['Cuarto', '3–5 semanas'],
+      ['Balcón', '2–4 semanas'],
+      ['Segundo piso', '2–4 meses'],
+      ['Techo / cubierta', '1–3 semanas'],
+    ],
+    proof: {
+      kind: 'list',
+      list: [
+        'Cimentación según estudio de suelo',
+        'Bloques, losa, instalaciones nuevas',
+        'Permisos y normativas vigentes',
+        'Garantía estructural de 5 años',
+      ],
+    },
+    flip: false,
+    whatsappMsg: 'Hola, quiero ampliar mi casa',
+  },
+  {
+    id: 'llave-en-mano',
+    num: '04',
+    title: 'Llave en Mano',
+    intro: 'Para MIPYMES, inversionistas, anfitriones de Airbnb. Entregamos un proyecto completo, hecho, listo para operar.',
+    features: [
+      'Local comercial',
+      'Hostal o Airbnb',
+      'Oficina',
+      'Reforma integral vivienda',
+      'Asesoría para inversores',
+    ],
+    specs: [
+      ['Local comercial', 'según proyecto'],
+      ['Hostal / Airbnb', 'según proyecto'],
+      ['Oficina', 'según proyecto'],
+      ['Reforma integral', 'según proyecto'],
+    ],
+    proof: {
+      kind: 'quote',
+      quote: 'Reformé la cocina entera. OBrava me enseñó cada paso con fotos. Sin sustos, sin extras. Recomendados 100%.',
+      attr: 'Carlos M. · Playa',
+    },
+    flip: true,
+    whatsappMsg: 'Hola, busco una obra llave en mano',
+  },
+  {
+    id: 'mantenimiento',
+    num: '05',
+    title: 'Plan de Mantenimiento',
+    intro: 'Para propiedades en alquiler. Una visita mensual, reporte con fotos, y atención prioritaria ante cualquier urgencia. Para que tu Airbnb no se caiga a las 3am.',
+    features: [
+      'Visita programada cada mes',
+      'Reparaciones menores incluidas',
+      'Reporte fotográfico al cierre',
+      'Atención prioritaria por WhatsApp',
+      'Costo fijo mensual',
+    ],
+    specs: [
+      ['Frecuencia', 'Mensual'],
+      ['Reporte', 'Con fotos'],
+      ['Urgencias', 'Prioridad 24/7'],
+      ['Reparaciones menores', 'Incluidas'],
+    ],
+    proof: {
+      kind: 'list',
+      list: [
+        'Costo fijo mensual, sin sorpresas',
+        'Reportes con fotos al cierre',
+        'Atención prioritaria 24/7',
+        'Cancela cuando quieras',
+      ],
+    },
+    flip: false,
+    whatsappMsg: 'Hola, me interesa un plan de mantenimiento OBrava',
+  },
+];
+---
+
+<BaseLayout
+  title="Servicios"
+  description="OBrava · Manitas, Reforma, Ampliación, Llave en Mano y Mantenimiento en La Habana. Presupuesto claro, fecha cierta, garantía escrita."
+>
+  <section class="bg-obrava-black border-b-8 border-obrava-orange py-12 sm:py-16">
+    <div class="container-brand">
+      <span class="eyebrow">Nuestros servicios</span>
+      <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-6 text-balance">
+        <span class="text-obrava-white">Todo lo que </span><span class="text-obrava-orange">construimos</span>
+      </h1>
+      <p class="text-lg sm:text-xl text-obrava-white font-display font-bold max-w-3xl">
+        Cinco paquetes. Todos con la misma promesa: presupuesto claro, fecha cierta, garantía escrita.
+      </p>
+    </div>
+  </section>
+
+  <div class="bg-obrava-black">
+    {services.map((s) => (
+      <section class:list={['section', 'bg-obrava-gray']} id={s.id}>
+        <div class="container-brand">
+          <div class:list={[
+            'grid lg:grid-cols-2 gap-6 lg:gap-10 items-stretch',
+          ]}>
+            {/* Texto */}
+            <div class:list={[
+              'bg-obrava-black border-4 border-obrava-orange p-6 sm:p-8 shadow-brutal flex flex-col',
+              s.flip ? 'lg:order-2' : '',
+            ]}>
+              <p class="font-mono text-xs uppercase tracking-wider text-obrava-orange mb-3">
+                {s.num} · Servicio
+              </p>
+              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-display font-black text-obrava-white uppercase mb-4">
+                {s.title}
+              </h2>
+              <p class="text-base sm:text-lg text-obrava-white font-display font-medium leading-relaxed mb-6">
+                {s.intro}
+              </p>
+              <p class="font-mono text-xs uppercase tracking-wider text-obrava-orange mb-3">Incluye</p>
+              <ul class="space-y-2 mb-6">
+                {s.features.map((f) => (
+                  <li class="flex items-start gap-3 text-obrava-white font-display font-bold">
+                    <span class="shrink-0 w-6 h-6 bg-obrava-orange text-obrava-black font-display font-black flex items-center justify-center mt-0.5">✓</span>
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+              <ul class="spec-list mb-6">
+                {s.specs.map(([label, value]) => (
+                  <li>
+                    <span>{label}</span>
+                    <span>{value}</span>
+                  </li>
+                ))}
+              </ul>
+              <a href={whatsappLink(s.whatsappMsg)} class="btn-primary self-start">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                </svg>
+                Cotizar este servicio
+              </a>
+            </div>
+
+            {/* Proof */}
+            <aside class:list={[
+              'bg-obrava-orange text-obrava-black border-4 border-obrava-orange shadow-brutal p-6 sm:p-8 flex flex-col justify-center',
+              s.flip ? 'lg:order-1' : '',
+            ]}>
+              {s.proof.kind === 'quote' && (
+                <>
+                  <p class="proof-quote">{s.proof.quote}</p>
+                  <p class="proof-attr"><strong>{s.proof.attr}</strong></p>
+                </>
+              )}
+              {s.proof.kind === 'stat' && (
+                <div>
+                  <p class="font-display font-black text-7xl lg:text-8xl leading-none text-obrava-black tracking-tighter">
+                    {s.proof.stat}
+                  </p>
+                  <p class="font-display font-bold text-lg mt-4 max-w-sm">{s.proof.statNote}</p>
+                </div>
+              )}
+              {s.proof.kind === 'list' && (
+                <>
+                  <p class="font-mono text-xs uppercase tracking-wider text-obrava-black mb-4">Detalle</p>
+                  <ul class="space-y-3 font-display font-bold text-obrava-black text-lg">
+                    {s.proof.list?.map((item) => (
+                      <li class="flex items-start gap-3">
+                        <span class="shrink-0 w-6 h-6 bg-obrava-black text-obrava-orange font-display font-black flex items-center justify-center mt-0.5">✓</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </aside>
+          </div>
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <section class="bg-obrava-orange text-obrava-black py-16 sm:py-20 border-b-8 border-obrava-black">
+    <div class="container-brand text-center">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4 sm:mb-6 uppercase text-balance">
+        ¿Cuál es tu obra?
+      </h2>
+      <p class="text-lg sm:text-xl mb-8 font-display font-bold max-w-2xl mx-auto">
+        Cuéntanos por WhatsApp. Te respondemos en menos de 2 horas. La visita es gratis.
+      </p>
+      <a href={whatsappLink('Hola OBrava, quiero cotizar un servicio')} class="inline-flex items-center justify-center bg-obrava-black text-obrava-orange font-display font-black uppercase tracking-wider px-8 py-4 border-4 border-obrava-black shadow-brutal-white hover:shadow-brutal-small-white hover:translate-x-1 hover:translate-y-1 transition-all text-base sm:text-lg">
+        Empezar por WhatsApp
+      </a>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,23 @@
+# OBrava · docker-compose para Dokploy
+# Dokploy lee este archivo o el Dockerfile directamente. Service Port: 4321
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: obrabrava-web
+    restart: unless-stopped
+    ports:
+      - '4321:4321'
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=4321
+    healthcheck:
+      test: ['CMD', 'wget', '-qO-', 'http://localhost:4321/']
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s

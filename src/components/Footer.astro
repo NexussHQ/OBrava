@@ -1,0 +1,85 @@
+---
+// Footer.astro
+// Estilo editorial "letter close" + columnas de servicio/contacto + meta
+import OBMonogram from './OBMonogram.astro';
+
+const whatsappHref = 'https://wa.me/5352622265?text=Hola%20OBrava%2C%20necesito%20un%20servicio';
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-obrava-black text-obrava-white border-t-8 border-obrava-orange">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12 mb-12">
+      <!-- Brand block -->
+      <div class="md:col-span-2">
+        <a href="/" class="flex items-center gap-3 mb-6 group" aria-label="OBrava · Inicio">
+          <OBMonogram variant="mark" size={56} className="shrink-0" />
+          <span class="font-display font-black text-3xl sm:text-4xl text-obrava-orange tracking-tight group-hover:translate-x-1 transition-transform">
+            OB<span class="text-obrava-white">RAVA</span>
+          </span>
+        </a>
+        <p class="font-display font-bold text-lg mb-4 max-w-md text-obrava-white">
+          La brigada que sí aparece. Construcción, reforma y mantenimiento con garantías reales en La Habana, Cuba.
+        </p>
+        <p class="font-mono text-xs uppercase tracking-wider text-obrava-orange">
+          Presupuesto claro · Fecha cierta · Garantía escrita
+        </p>
+      </div>
+
+      <!-- Servicios -->
+      <div>
+        <h3 class="font-display font-black text-lg uppercase mb-4 text-obrava-orange border-b-2 border-obrava-orange pb-2">
+          Servicios
+        </h3>
+        <ul class="space-y-2 font-display font-bold text-sm">
+          <li><a href="/servicios#manitas" class="hover:text-obrava-orange transition-colors">Manitas</a></li>
+          <li><a href="/servicios#reforma" class="hover:text-obrava-orange transition-colors">Reforma</a></li>
+          <li><a href="/servicios#ampliacion" class="hover:text-obrava-orange transition-colors">Ampliación</a></li>
+          <li><a href="/servicios#llave-en-mano" class="hover:text-obrava-orange transition-colors">Llave en Mano</a></li>
+          <li><a href="/servicios#mantenimiento" class="hover:text-obrava-orange transition-colors">Mantenimiento</a></li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div>
+        <h3 class="font-display font-black text-lg uppercase mb-4 text-obrava-orange border-b-2 border-obrava-orange pb-2">
+          Contacto
+        </h3>
+        <ul class="space-y-3 font-display text-sm">
+          <li class="flex items-start gap-2">
+            <span class="font-mono text-xs uppercase text-obrava-orange shrink-0">Email</span>
+            <a href="mailto:sandyllerena77@gmail.com" class="hover:text-obrava-orange transition-colors break-all">
+              sandyllerena77@gmail.com
+            </a>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="font-mono text-xs uppercase text-obrava-orange shrink-0">WhatsApp</span>
+            <a href="https://wa.me/5352622265" class="hover:text-obrava-orange transition-colors">
+              +53 526 222 65
+            </a>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="font-mono text-xs uppercase text-obrava-orange shrink-0">Tel</span>
+            <a href="tel:+5352622265" class="hover:text-obrava-orange transition-colors">
+              052 622 265
+            </a>
+          </li>
+          <li class="font-mono text-xs uppercase text-obrava-orange">La Habana, Cuba</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t-4 border-obrava-silver flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="font-mono text-xs uppercase tracking-wider text-obrava-silver">
+        © {year} OBRAVA · La Habana. Misión Cumplida.
+      </p>
+      <div class="flex gap-4 font-mono text-xs uppercase tracking-wider">
+        <a href="/contacto" class="text-obrava-silver hover:text-obrava-orange transition-colors">Contacto</a>
+        <span class="text-obrava-silver">·</span>
+        <a href="https://wa.me/5352622265" class="text-obrava-silver hover:text-obrava-orange transition-colors">WhatsApp</a>
+        <span class="text-obrava-silver">·</span>
+        <a href="mailto:sandyllerena77@gmail.com" class="text-obrava-silver hover:text-obrava-orange transition-colors">Email</a>
+      </div>
+    </div>
+  </div>
+</footer>

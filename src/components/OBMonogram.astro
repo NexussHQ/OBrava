@@ -1,11 +1,15 @@
 ---
 // OBMonogram.astro
-// Monograma OB estilo neo-brutalista reconstruido en SVG puro.
+// Variantes del monograma OB estilo neo-brutalista:
+// - 'mark'   : cuadrado compacto (64x64), ideal para favicon/wordmark
+// - 'logo'   : monograma grande 200x200 con O naranja y B plateada (fiel al banner)
+// - 'wordmark': solo texto "OBRAVA" sobre fondo negro
+// - 'favicon': igual a 'mark'
+//
 // Especificaciones del manual de marca:
-// - Construction Orange (#F26522) y Deep Charcoal (#000000)
-// - Bordes afilados (radius 0)
-// - Bloques estructurales entrelazados O y B
-// - Sin gradientes, sin sombras suaves
+// - Construction Orange (#F26522) — ladrillo
+// - Silver/Brushed steel (#BFBFBF) — para la "B"
+// - Deep Charcoal (#000000) — fondo + huecos
 export interface Props {
   size?: number;
   variant?: 'logo' | 'favicon' | 'wordmark' | 'mark';
@@ -45,24 +49,52 @@ const { size = 200, variant = 'logo', className = '' } = Astro.props;
     width={size}
     height={size}
     class={className}
-    aria-label="OBrava monogram"
+    aria-label="OB monogram"
+    role="img"
   >
-    {/* Background block — deep charcoal */}
+    {/* Fondo negro profundo */}
     <rect width="200" height="200" fill="#000000" />
-    {/* O block — left orange */}
+
+    {/* === O — bloque Construction Orange (atrás) === */}
     <g>
-      <rect x="20" y="20" width="80" height="160" fill="#f26522" />
-      <rect x="44" y="44" width="32" height="112" fill="#000000" />
+      <rect x="14" y="22" width="84" height="156" fill="#F26522" />
+      <rect x="40" y="46" width="32" height="108" fill="#000000" />
     </g>
-    {/* B block — right orange with two cutouts */}
+
+    {/* === B — bloque plateado/acero (adelante, entrelazado) === */}
     <g>
-      <rect x="100" y="20" width="80" height="160" fill="#f26522" />
-      <rect x="124" y="44" width="32" height="44" fill="#000000" />
-      <rect x="124" y="112" width="32" height="44" fill="#000000" />
+      {/* Base de la B en plateado con leve gradiente lineal para textura de acero */}
+      <defs>
+        <linearGradient id="steel-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#D8D8D8" />
+          <stop offset="45%" stop-color="#B5B5B5" />
+          <stop offset="55%" stop-color="#9A9A9A" />
+          <stop offset="100%" stop-color="#C8C8C8" />
+        </linearGradient>
+        <linearGradient id="steel-edge" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#7A7A7A" />
+          <stop offset="50%" stop-color="#3A3A3A" />
+          <stop offset="100%" stop-color="#7A7A7A" />
+        </linearGradient>
+      </defs>
+
+      {/* Borde frontal de la B (plateado) */}
+      <rect x="98" y="22" width="88" height="156" fill="url(#steel-grad)" />
+      {/* Borde lateral de la B (sombra dura) — simula volumen 3D */}
+      <rect x="186" y="22" width="6" height="156" fill="url(#steel-edge)" />
+
+      {/* Huecos de la B */}
+      <rect x="124" y="46" width="36" height="44" fill="#000000" />
+      <rect x="124" y="110" width="36" height="44" fill="#000000" />
+
+      {/* Línea central que divide los dos huecos de la B (refuerza la "B") */}
+      <rect x="98" y="98" width="88" height="6" fill="url(#steel-grad)" />
     </g>
-    {/* Hard offset accent — top-right + bottom-left */}
-    <rect x="184" y="0" width="16" height="16" fill="#f26522" />
-    <rect x="0" y="184" width="16" height="16" fill="#f26522" />
+
+    {/* === Detalles de entrelazado — borde naranja visible detrás de la B === */}
+    {/* Pequeño fragmento naranja a la derecha de la O que se asoma detrás de la B */}
+    <rect x="186" y="60" width="6" height="20" fill="#F26522" />
+    <rect x="186" y="120" width="6" height="20" fill="#F26522" />
   </svg>
 )}
 
@@ -76,9 +108,11 @@ const { size = 200, variant = 'logo', className = '' } = Astro.props;
     aria-label="OB"
   >
     <rect width="64" height="64" fill="#000000" />
-    <rect x="6" y="6" width="26" height="52" fill="#f26522" />
+    {/* O naranja */}
+    <rect x="6" y="6" width="26" height="52" fill="#F26522" />
     <rect x="13" y="13" width="12" height="38" fill="#000000" />
-    <rect x="32" y="6" width="26" height="52" fill="#f26522" />
+    {/* B plateada (más visible en tamaño pequeño, con dos huecos negros) */}
+    <rect x="32" y="6" width="26" height="52" fill="#BFBFBF" />
     <rect x="39" y="13" width="12" height="14" fill="#000000" />
     <rect x="39" y="29" width="12" height="14" fill="#000000" />
   </svg>
@@ -94,9 +128,9 @@ const { size = 200, variant = 'logo', className = '' } = Astro.props;
     aria-label="OBrava"
   >
     <rect width="64" height="64" fill="#000000" />
-    <rect x="6" y="6" width="26" height="52" fill="#f26522" />
+    <rect x="6" y="6" width="26" height="52" fill="#F26522" />
     <rect x="13" y="13" width="12" height="38" fill="#000000" />
-    <rect x="32" y="6" width="26" height="52" fill="#f26522" />
+    <rect x="32" y="6" width="26" height="52" fill="#BFBFBF" />
     <rect x="39" y="13" width="12" height="14" fill="#000000" />
     <rect x="39" y="29" width="12" height="14" fill="#000000" />
   </svg>

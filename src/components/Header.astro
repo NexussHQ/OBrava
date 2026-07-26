@@ -1,7 +1,7 @@
 ---
 // Header.astro
-// Nav fixed neo-brutalista. Logo: imagen PNG 3D del banner (asset de marca).
-import headerLogo from '../assets/logos/header-logo.png';
+// Nav fixed neo-brutalista. Logo: BrandMark (monograma SVG + wordmark integrado).
+import BrandMark from './BrandMark.astro';
 
 const pathname = Astro.url.pathname;
 const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
@@ -19,17 +19,8 @@ const whatsappHref = 'https://wa.me/5352622265?text=Hola%20OBrava%2C%20necesito%
 <header class="fixed top-0 w-full z-50 bg-obrava-black border-b-8 border-obrava-orange">
   <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16 sm:h-20 gap-2">
-      <a href="/" class="flex items-center group shrink-0" aria-label="OBrava · Inicio">
-        <img
-          src={headerLogo.src}
-          alt="OBrava — la brigada que sí aparece"
-          class="h-10 sm:h-12 md:h-14 w-auto"
-          width={headerLogo.width}
-          height={headerLogo.height}
-          decoding="async"
-          loading="eager"
-        />
-      </a>
+      <BrandMark size="sm" className="md:!hidden" />
+      <BrandMark size="md" className="hidden md:inline-flex" />
 
       <nav class="hidden md:flex gap-6 lg:gap-8" aria-label="Navegación principal">
         {navLinks.map(({ href, label, blink }) => (

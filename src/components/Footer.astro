@@ -1,7 +1,7 @@
 ---
 // Footer.astro
-// Estilo editorial + columnas de servicio/contacto + meta. Logo: imagen del banner.
-import footerLogo from '../assets/logos/header-logo.png';
+// Estilo editorial + columnas de servicio/contacto + meta. Logo: BrandMark integrado.
+import BrandMark from './BrandMark.astro';
 
 const whatsappHref = 'https://wa.me/5352622265?text=Hola%20OBrava%2C%20necesito%20un%20servicio';
 const telHref = 'tel:+5352622265';
@@ -13,17 +13,7 @@ const year = new Date().getFullYear();
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12 mb-12">
       <!-- Brand block -->
       <div class="md:col-span-2">
-        <a href="/" class="inline-block mb-6 group" aria-label="OBrava · Inicio">
-          <img
-            src={footerLogo.src}
-            alt="OBrava"
-            class="h-16 sm:h-20 w-auto"
-            width={footerLogo.width}
-            height={footerLogo.height}
-            decoding="async"
-            loading="lazy"
-          />
-        </a>
+        <BrandMark size="lg" className="mb-5 sm:mb-6" />
         <p class="font-display font-bold text-base sm:text-lg mb-4 max-w-md text-obrava-white leading-relaxed">
           La brigada que sí aparece. Construcción, reforma y mantenimiento con garantías reales en La Habana, Cuba.
         </p>

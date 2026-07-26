@@ -1,12 +1,9 @@
 ---
 // src/pages/index.astro
-// OBrava · Landing principal (v2.4)
-// Hero:
-//  - Mobile (<lg): AlbanilAnimation (SVG animado ligero)
-//  - Desktop (≥lg): monograma 3D del banner (identidad de marca fuerte)
+// OBrava · Landing principal (v2.5)
+// Hero: AlbanilAnimation en mobile (arriba, escala chica) y desktop (a la derecha, escala grande).
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AlbanilAnimation from '../components/AlbanilAnimation.astro';
-import monogram3dMark from '../assets/logos/ob-monogram-3d-mark.png';
 
 const whatsappLink = (msg: string) =>
   `https://wa.me/5352622265?text=${encodeURIComponent(msg)}`;
@@ -160,7 +157,7 @@ const faqs = [
   <!-- ============== HERO ============== -->
   <section class="bg-obrava-black border-b-8 border-obrava-orange relative overflow-hidden">
     <div class="container-brand py-10 sm:py-14 lg:py-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-      <div class="lg:col-span-7 relative z-10" data-reveal="fade-up" data-reveal-duration="900">
+      <div class="order-2 lg:order-1 lg:col-span-7 relative z-10" data-reveal="fade-up" data-reveal-duration="900">
         <span class="eyebrow" data-reveal="pop" data-reveal-delay="100" data-reveal-duration="500">La brigada que sí aparece</span>
         <h1 class="text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-6 sm:mb-8 text-balance">
           <span class="text-obrava-white">OB</span><span class="text-obrava-orange">RAVA.</span>
@@ -183,24 +180,16 @@ const faqs = [
           Respondemos en menos de 2h · Visita gratis
         </p>
       </div>
-      <div class="lg:col-span-5 flex justify-center items-center relative" data-reveal="scale" data-reveal-duration="900" data-reveal-delay="200">
-        <!-- Mobile: AlbanilAnimation (SVG animado, ligero) -->
-        <div class="lg:hidden border-8 border-obrava-orange shadow-brutal p-3 sm:p-4 bg-obrava-black max-w-[280px]">
-          <AlbanilAnimation className="max-w-full" />
+      <div class="order-1 lg:order-2 lg:col-span-5 flex justify-center lg:justify-end items-center relative" data-reveal="scale" data-reveal-duration="900" data-reveal-delay="200">
+        <!-- Mobile/tablet: AlbanilAnimation (escala chica, 220-260px) -->
+        <div class="lg:hidden border-8 border-obrava-orange shadow-brutal p-2.5 sm:p-3 bg-obrava-black w-[220px] sm:w-[260px]">
+          <AlbanilAnimation className="w-full" />
         </div>
-        <!-- Desktop: monograma 3D del banner (identidad de marca) -->
-        <div class="hidden lg:block border-8 border-obrava-orange shadow-brutal p-3 sm:p-6 bg-obrava-black">
-          <img
-            src={monogram3dMark.src}
-            alt="Monograma 3D OBrava — O naranja entrelazada con B de acero"
-            class="w-full h-auto max-w-md"
-            width={monogram3dMark.width}
-            height={monogram3dMark.height}
-            loading="eager"
-            decoding="async"
-          />
+        <!-- Desktop: AlbanilAnimation (escala grande, max-w 420px) -->
+        <div class="hidden lg:block border-8 border-obrava-orange shadow-brutal p-4 bg-obrava-black w-full max-w-[420px]">
+          <AlbanilAnimation className="w-full" />
         </div>
-        <div class="absolute -top-4 -right-4 bg-obrava-orange text-obrava-black font-display font-black uppercase text-[10px] sm:text-xs px-2 sm:px-3 py-1 border-4 border-obrava-black shadow-brutal-white" data-reveal="rotate" data-reveal-delay="700">
+        <div class="absolute -top-4 -right-2 lg:-right-4 bg-obrava-orange text-obrava-black font-display font-black uppercase text-[10px] sm:text-xs px-2 sm:px-3 py-1 border-4 border-obrava-black shadow-brutal-white" data-reveal="rotate" data-reveal-delay="700">
           La Habana · 2026
         </div>
       </div>

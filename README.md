@@ -38,7 +38,7 @@ Bordes `4–8px`, sombras duras `4–8px offset`, `border-radius: 0` global (exc
 
 - **WhatsApp**: +53 526 222 65 → `https://wa.me/5352622265`
 - **Email**: sandyllerena77@gmail.com
-- **Teléfono**: 052 622 265
+- **Teléfono**: 052622265
 - **Ubicación**: La Habana, Cuba
 
 Para cambiar los datos, busca `5352622265` / `sandyllerena77@gmail.com` / `052 622 265` en `src/`.
@@ -51,7 +51,7 @@ Copia `.env.example` a `.env` para desarrollo local.
 PUBLIC_SITE_URL=https://obrava.global-bnex.site
 PUBLIC_WHATSAPP_NUMBER=+5352622265
 PUBLIC_EMAIL=sandyllerena77@gmail.com
-PUBLIC_PHONE_DISPLAY=052 622 265
+PUBLIC_PHONE_DISPLAY=052622265
 PUBLIC_CONTACTO_WEBHOOK=    # opcional: webhook n8n/Formspree/Resend
 ```
 

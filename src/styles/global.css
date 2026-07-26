@@ -4,7 +4,7 @@
 
 /* OBrava · Global Styles
  * Manual de marca v1.0 — Neo-brutalist (sharp 0), Construction Orange + Deep Charcoal + Technical White.
- * v2.0 — Landing editorial con contenido enriquecido (servicios, proceso, embajadores, FAQ, FAB WhatsApp).
+ * v2.1 — Animaciones al scroll (Reveal), counter-up, parallax sutil, WhatsApp FAB animado.
  */
 
 @layer base {
@@ -25,9 +25,9 @@
     overflow-x: hidden;
   }
 
-  /* Locked zero-radii per brand (except FAB which is a circle) */
-  *:not(.wa-fab):not(.wa-fab *):not(rounded-full) {
-    border-radius: 0 !important;
+  /* Locked zero-radii per brand (excepto el FAB y su pulse) */
+  .wa-fab, .wa-fab *, .wa-fab-pulse, [data-parallax] {
+    border-radius: 9999px !important;
   }
 
   /* Typography */
@@ -36,16 +36,15 @@
     font-style: normal;
   }
 
-  h1 { @apply text-headline-lg-mobile md:text-headline-lg; }
-  h2 { @apply text-headline-md md:text-headline-md; }
-  h3 { @apply text-headline-sm; }
-  h4 { @apply text-xl; }
+  h1 { @apply text-3xl sm:text-4xl md:text-6xl lg:text-7xl; }
+  h2 { @apply text-2xl sm:text-3xl md:text-5xl lg:text-6xl; }
+  h3 { @apply text-xl sm:text-2xl md:text-3xl; }
+  h4 { @apply text-lg sm:text-xl; }
 
   p {
-    @apply text-body-md leading-relaxed;
+    @apply text-base leading-relaxed;
   }
 
-  /* Focus visible — instant ring */
   :focus-visible {
     outline: 3px solid #f26522;
     outline-offset: 3px;
@@ -60,18 +59,19 @@
     html { scroll-behavior: auto; }
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
   }
 }
 
 @layer components {
-  /* === Neo-brutalist button — primary === */
+  /* === Botones === */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2
            bg-obrava-orange text-obrava-black
            font-display font-black uppercase tracking-wider
-           px-6 sm:px-8 py-3 sm:py-4
+           px-5 sm:px-8 py-3 sm:py-4
            text-sm sm:text-base
            border-4 border-obrava-orange
            shadow-brutal-white
@@ -86,7 +86,7 @@
     @apply inline-flex items-center justify-center gap-2
            bg-obrava-black text-obrava-white
            font-display font-black uppercase tracking-wider
-           px-6 sm:px-8 py-3 sm:py-4
+           px-5 sm:px-8 py-3 sm:py-4
            text-sm sm:text-base
            border-4 border-obrava-white
            shadow-brutal
@@ -99,7 +99,7 @@
     @apply inline-flex items-center justify-center gap-2
            bg-obrava-black text-obrava-orange
            font-display font-black uppercase tracking-wider
-           px-6 sm:px-8 py-3 sm:py-4
+           px-5 sm:px-8 py-3 sm:py-4
            text-sm sm:text-base
            border-4 border-obrava-orange
            shadow-brutal
@@ -108,29 +108,28 @@
            hover:translate-x-1 hover:translate-y-1;
   }
 
-  /* === Section wrapper === */
+  /* === Sections === */
   .section {
-    @apply py-16 sm:py-20 lg:py-24 border-b-8 border-obrava-orange;
+    @apply py-14 sm:py-20 lg:py-24 border-b-8 border-obrava-orange;
   }
 
   .section-tight {
-    @apply py-12 sm:py-16 lg:py-20 border-b-8 border-obrava-orange;
+    @apply py-10 sm:py-16 lg:py-20 border-b-8 border-obrava-orange;
   }
 
   .container-brand {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
-  /* === Hard panel — pushed card with orange offset === */
+  /* === Panels === */
   .panel {
-    @apply bg-obrava-gray border-4 border-obrava-orange p-6 sm:p-8 shadow-brutal;
+    @apply bg-obrava-gray border-4 border-obrava-orange p-5 sm:p-8 shadow-brutal;
   }
 
   .panel-dark {
-    @apply bg-obrava-black border-4 border-obrava-orange p-6 sm:p-8 shadow-brutal;
+    @apply bg-obrava-black border-4 border-obrava-orange p-5 sm:p-8 shadow-brutal;
   }
 
-  /* === Eyebrow / Section label === */
   .eyebrow {
     @apply inline-block bg-obrava-black text-obrava-orange
            font-mono text-xs uppercase tracking-wider
@@ -138,23 +137,23 @@
            mb-4;
   }
 
-  /* === Service spec table (editorial) === */
+  /* === Spec list (editorial) === */
   .spec-list {
     @apply divide-y-2 divide-obrava-silver border-t-2 border-b-2 border-obrava-silver;
   }
   .spec-list li {
-    @apply flex items-center justify-between py-3 font-display font-bold;
+    @apply flex items-center justify-between py-3 font-display font-bold gap-3;
   }
-  .spec-list li span:first-child {
+  .spec-list li > span:first-child {
     @apply text-obrava-orange font-mono text-xs uppercase tracking-wider;
   }
-  .spec-list li span:last-child {
-    @apply text-obrava-white font-display font-black uppercase;
+  .spec-list li > span:last-child {
+    @apply text-obrava-white font-display font-black uppercase text-right;
   }
 
-  /* === Editorial proof block === */
+  /* === Editorial proof === */
   .proof-quote {
-    @apply text-2xl font-display font-black leading-tight text-obrava-white;
+    @apply text-xl sm:text-2xl font-display font-black leading-tight text-obrava-white;
   }
   .proof-quote::before { content: "“"; @apply text-obrava-orange mr-1; }
   .proof-quote::after  { content: "”"; @apply text-obrava-orange ml-1; }
@@ -165,7 +164,6 @@
     @apply text-obrava-white font-bold;
   }
 
-  /* === Hard rule (typographic) === */
   .rule-hair      { @apply border-t border-obrava-silver; }
   .rule-hair-thick { @apply border-t-4 border-obrava-orange; }
   .rule-hair-orange { @apply border-t-2 border-obrava-orange; }
@@ -174,4 +172,101 @@
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
+}
+
+/* =============================================================
+   REVEAL — animaciones al entrar en viewport
+   Activar con: data-reveal="fade-up|fade-left|fade-right|scale|pop|rotate"
+   Modificadores: data-reveal-delay="200"  data-reveal-duration="900"
+   ============================================================= */
+[data-reveal] {
+  --reveal-delay: 0ms;
+  --reveal-duration: 800ms;
+  opacity: 0;
+  transition:
+    opacity var(--reveal-duration) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay),
+    transform var(--reveal-duration) cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay);
+  will-change: opacity, transform;
+}
+[data-reveal="fade-up"]     { transform: translateY(48px); }
+[data-reveal="fade-down"]   { transform: translateY(-48px); }
+[data-reveal="fade-left"]   { transform: translateX(-56px); }
+[data-reveal="fade-right"]  { transform: translateX(56px); }
+[data-reveal="scale"]       { transform: scale(0.85); }
+[data-reveal="pop"]         { transform: scale(0.6); }
+[data-reveal="rotate"]      { transform: rotate(-4deg) translateY(28px); }
+[data-reveal="blur"]        { transform: translateY(20px); filter: blur(8px); }
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: translate(0, 0) scale(1) rotate(0);
+  filter: blur(0);
+}
+
+/* Hover micro-interactions en cards de servicio */
+.reveal-card {
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 280ms ease-out;
+}
+.reveal-card:hover {
+  transform: translate(-2px, -2px);
+}
+
+/* Staggered children: aplica --i al hijo para escalonar */
+[data-stagger] > * {
+  --i: 0;
+  transition-delay: calc(var(--i) * 90ms);
+}
+[data-stagger].is-visible > *:nth-child(1) { --i: 0; }
+[data-stagger].is-visible > *:nth-child(2) { --i: 1; }
+[data-stagger].is-visible > *:nth-child(3) { --i: 2; }
+[data-stagger].is-visible > *:nth-child(4) { --i: 3; }
+[data-stagger].is-visible > *:nth-child(5) { --i: 4; }
+[data-stagger].is-visible > *:nth-child(6) { --i: 5; }
+
+/* Parallax (controlado por JS vía --parallax-y) */
+[data-parallax] {
+  transform: translate3d(0, var(--parallax-y, 0), 0);
+  transition: transform 80ms linear;
+}
+
+/* Animated underline para headings */
+@keyframes ob-underline {
+  0%   { transform: scaleX(0); transform-origin: left; }
+  100% { transform: scaleX(1); transform-origin: left; }
+}
+.heading-underline::after {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 4px;
+  background: #f26522;
+  margin-top: 8px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1) 200ms;
+}
+[data-reveal="fade-up"].is-visible .heading-underline::after,
+.heading-underline.is-visible::after {
+  transform: scaleX(1);
+}
+
+/* Float suave para el monograma del hero */
+@keyframes ob-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+.float-slow {
+  animation: ob-float 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .float-slow { animation: none; }
+}
+
+/* Spin lento del ring del proceso (timeline) */
+@keyframes ob-spin {
+  to { transform: rotate(360deg); }
+}
+.spin-slow { animation: ob-spin 16s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .spin-slow { animation: none; }
 }

@@ -163,21 +163,21 @@ const services: Service[] = [
   title="Servicios"
   description="OBrava · Manitas, Reforma, Ampliación, Llave en Mano y Mantenimiento en La Habana. Presupuesto claro, fecha cierta, garantía escrita."
 >
-  <section class="bg-obrava-black border-b-8 border-obrava-orange py-12 sm:py-16">
+  <section class="bg-obrava-black border-b-8 border-obrava-orange py-10 sm:py-14">
     <div class="container-brand">
-      <span class="eyebrow">Nuestros servicios</span>
-      <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-6 text-balance">
+      <span class="eyebrow" data-reveal="pop">Nuestros servicios</span>
+      <h1 class="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-6 text-balance" data-reveal="fade-up">
         <span class="text-obrava-white">Todo lo que </span><span class="text-obrava-orange">construimos</span>
       </h1>
-      <p class="text-lg sm:text-xl text-obrava-white font-display font-bold max-w-3xl">
+      <p class="text-base sm:text-xl text-obrava-white font-display font-bold max-w-3xl" data-reveal="fade-up" data-reveal-delay="150">
         Cinco paquetes. Todos con la misma promesa: presupuesto claro, fecha cierta, garantía escrita.
       </p>
     </div>
   </section>
 
   <div class="bg-obrava-black">
-    {services.map((s) => (
-      <section class:list={['section', 'bg-obrava-gray']} id={s.id}>
+    {services.map((s, i) => (
+      <section class:list={['section', 'bg-obrava-gray']} id={s.id} data-reveal={i % 2 === 0 ? 'fade-left' : 'fade-right'} data-reveal-duration="900">
         <div class="container-brand">
           <div class:list={[
             'grid lg:grid-cols-2 gap-6 lg:gap-10 items-stretch',

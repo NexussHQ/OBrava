@@ -1,14 +1,14 @@
 ---
 // Header.astro
-// Nav fixed neo-brutalista: borde 8px orange, wordmark + links + CTA WhatsApp
-import OBMonogram from './OBMonogram.astro';
+// Nav fixed neo-brutalista. Logo: imagen PNG 3D del banner (asset de marca).
+import headerLogo from '../assets/logos/header-logo.png';
 
 const pathname = Astro.url.pathname;
 const isActive = (href: string) => pathname === href || (href !== '/' && pathname.startsWith(href));
 
 const navLinks = [
   { href: '/', label: 'Inicio' },
-  { href: '/servicios', label: 'Servicios' },
+  { href: '/servicios', label: 'Servicios', blink: true },
   { href: '/nosotros', label: 'Nosotros' },
   { href: '/contacto', label: 'Contacto' },
 ];
@@ -17,21 +17,28 @@ const whatsappHref = 'https://wa.me/5352622265?text=Hola%20OBrava%2C%20necesito%
 ---
 
 <header class="fixed top-0 w-full z-50 bg-obrava-black border-b-8 border-obrava-orange">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-20">
-      <a href="/" class="flex items-center gap-3 group" aria-label="OBrava · Inicio">
-        <OBMonogram variant="mark" size={48} className="shrink-0" />
-        <span class="hidden md:inline-block text-obrava-orange font-display font-black text-2xl uppercase tracking-tight group-hover:translate-x-1 transition-transform">
-          OB<span class="text-obrava-white">RAVA</span>
-        </span>
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16 sm:h-20 gap-2">
+      <a href="/" class="flex items-center group shrink-0" aria-label="OBrava · Inicio">
+        <img
+          src={headerLogo.src}
+          alt="OBrava — la brigada que sí aparece"
+          class="h-10 sm:h-12 md:h-14 w-auto"
+          width={headerLogo.width}
+          height={headerLogo.height}
+          decoding="async"
+          loading="eager"
+        />
       </a>
 
-      <nav class="hidden md:flex gap-8" aria-label="Navegación principal">
-        {navLinks.map(({ href, label }) => (
+      <nav class="hidden md:flex gap-6 lg:gap-8" aria-label="Navegación principal">
+        {navLinks.map(({ href, label, blink }) => (
           <a
             href={href}
             class:list={[
-              'text-sm font-bold border-b-4 transition-colors uppercase',
+              'nav-link',
+              'text-sm font-bold border-b-4 transition-colors uppercase whitespace-nowrap',
+              blink && 'nav-link--blink',
               isActive(href)
                 ? 'border-obrava-orange text-obrava-orange'
                 : 'border-transparent text-obrava-white hover:border-obrava-orange',
@@ -43,10 +50,10 @@ const whatsappHref = 'https://wa.me/5352622265?text=Hola%20OBrava%2C%20necesito%
         ))}
       </nav>
 
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-2 sm:gap-3">
         <a
           href={whatsappHref}
-          class="bg-obrava-orange text-obrava-black px-4 sm:px-6 py-2.5 font-black border-4 border-obrava-orange shadow-brutal-white hover:shadow-brutal-small-white hover:translate-x-1 hover:translate-y-1 transition-all flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider"
+          class="bg-obrava-orange text-obrava-black px-3 sm:px-5 lg:px-6 py-2 sm:py-2.5 font-black border-4 border-obrava-orange shadow-brutal-white hover:shadow-brutal-small-white hover:translate-x-1 hover:translate-y-1 transition-all flex items-center gap-2 text-xs sm:text-sm uppercase tracking-wider"
           aria-label="Contactar por WhatsApp"
         >
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -57,7 +64,7 @@ const whatsappHref = 'https://wa.me/5352622265?text=Hola%20OBrava%2C%20necesito%
 
         <button
           id="menu-toggle"
-          class="md:hidden text-obrava-white hover:text-obrava-orange transition-colors p-2"
+          class="md:hidden text-obrava-white hover:text-obrava-orange transition-colors p-2 shrink-0"
           aria-label="Abrir menú"
           aria-expanded="false"
           aria-controls="mobile-menu"
@@ -77,11 +84,12 @@ const whatsappHref = 'https://wa.me/5352622265?text=Hola%20OBrava%2C%20necesito%
     class="md:hidden hidden bg-obrava-black border-t-4 border-obrava-orange"
   >
     <nav class="max-w-7xl mx-auto px-4 py-6 space-y-4" aria-label="Navegación móvil">
-      {navLinks.map(({ href, label }) => (
+      {navLinks.map(({ href, label, blink }) => (
         <a
           href={href}
           class:list={[
-            'block text-lg font-bold uppercase border-l-4 pl-4 py-2',
+            'block text-base sm:text-lg font-bold uppercase border-l-4 pl-4 py-2',
+            blink && 'nav-link--blink',
             isActive(href)
               ? 'border-obrava-orange text-obrava-orange'
               : 'border-transparent text-obrava-white hover:border-obrava-orange',
@@ -93,6 +101,24 @@ const whatsappHref = 'https://wa.me/5352622265?text=Hola%20OBrava%2C%20necesito%
     </nav>
   </div>
 </header>
+
+<style>
+  /* Parpadeo de la pestaña "Servicios" — atrae la atención sin distraer */
+  @keyframes servicios-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+  .nav-link--blink {
+    animation: servicios-blink 1.6s ease-in-out infinite;
+  }
+  .nav-link--blink:hover {
+    animation: none;
+    opacity: 1;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-link--blink { animation: none; }
+  }
+</style>
 
 <script>
   const toggle = document.getElementById('menu-toggle');

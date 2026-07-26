@@ -35,13 +35,13 @@ const stats = [
   title="Nosotros"
   description="OBrava · La brigada que sí aparece. Conoce nuestra historia, valores y compromiso con el cumplimiento en La Habana, Cuba."
 >
-  <section class="bg-obrava-black border-b-8 border-obrava-orange py-12 sm:py-16">
+  <section class="bg-obrava-black border-b-8 border-obrava-orange py-10 sm:py-14">
     <div class="container-brand">
-      <span class="eyebrow">Sobre nosotros</span>
-      <h1 class="text-4xl sm:text-5xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-6 text-balance">
+      <span class="eyebrow" data-reveal="pop">Sobre nosotros</span>
+      <h1 class="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tighter mb-4 sm:mb-6 text-balance" data-reveal="fade-up">
         <span class="text-obrava-white">La brigada que </span><span class="text-obrava-orange">sí aparece.</span>
       </h1>
-      <p class="text-lg sm:text-xl text-obrava-white font-display font-bold max-w-3xl">
+      <p class="text-base sm:text-xl text-obrava-white font-display font-bold max-w-3xl" data-reveal="fade-up" data-reveal-delay="150">
         Construir en La Habana exige algo más que buenas manos: exige confianza. OBrava nació para cerrar la brecha entre lo que se promete y lo que se cumple.
       </p>
     </div>
@@ -49,27 +49,27 @@ const stats = [
 
   <section class="section bg-obrava-gray">
     <div class="container-brand grid lg:grid-cols-2 gap-10 lg:gap-12">
-      <div>
+      <div data-reveal="fade-left">
         <span class="eyebrow">El problema</span>
-        <h2 class="text-3xl sm:text-4xl font-black tracking-tight mb-6 text-obrava-orange text-balance">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight mb-5 sm:mb-6 text-obrava-orange text-balance">
           Conseguir una buena brigada en La Habana es difícil.
         </h2>
-        <p class="text-base sm:text-lg text-obrava-white font-display font-medium mb-4 leading-relaxed">
+        <p class="text-sm sm:text-base md:text-lg text-obrava-white font-display font-medium mb-4 leading-relaxed">
           La mayoría de los competidores informales no da cotización formal, no entrega presupuesto por escrito, no fecha de inicio, no fecha de entrega, no garantía. Te prometen "mañana empezamos" y desaparecen.
         </p>
-        <p class="text-base sm:text-lg text-obrava-white font-display font-medium leading-relaxed">
+        <p class="text-sm sm:text-base md:text-lg text-obrava-white font-display font-medium leading-relaxed">
           Y si la obra sale mal, no hay con quién reclamarla. Solo te queda aceptar el resultado o pelear meses.
         </p>
       </div>
-      <div>
+      <div data-reveal="fade-right">
         <span class="eyebrow">Nuestra respuesta</span>
-        <h2 class="text-3xl sm:text-4xl font-black tracking-tight mb-6 text-obrava-orange text-balance">
+        <h2 class="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight mb-5 sm:mb-6 text-obrava-orange text-balance">
           Cumplir lo que decimos, por escrito.
         </h2>
-        <p class="text-base sm:text-lg text-obrava-white font-display font-medium mb-4 leading-relaxed">
+        <p class="text-sm sm:text-base md:text-lg text-obrava-white font-display font-medium mb-4 leading-relaxed">
           OBrava opera con tres reglas inquebrantables: presupuesto claro, fecha cierta, garantía escrita. Cada obra tiene un contrato firmado, una fecha de inicio, una fecha de entrega, y una garantía de 6 meses en mano de obra y 1 año en instalaciones.
         </p>
-        <p class="text-base sm:text-lg text-obrava-white font-display font-medium leading-relaxed">
+        <p class="text-sm sm:text-base md:text-lg text-obrava-white font-display font-medium leading-relaxed">
           No somos la brigada más barata. Somos la brigada que responde, cumple y respalda su trabajo.
         </p>
       </div>
@@ -84,12 +84,12 @@ const stats = [
           Nuestros valores
         </h2>
       </div>
-      <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
+      <div class="grid md:grid-cols-3 gap-6 sm:gap-8" data-stagger>
         {values.map((v) => (
-          <div class="bg-obrava-gray p-6 sm:p-8 border-4 border-obrava-orange shadow-brutal">
+          <div data-reveal="fade-up" data-reveal-duration="800" class="bg-obrava-gray p-6 sm:p-8 border-4 border-obrava-orange shadow-brutal reveal-card">
             <div class="font-mono text-sm uppercase tracking-wider text-obrava-orange mb-4">{v.n}</div>
-            <h3 class="text-2xl font-display font-black mb-4 text-obrava-white uppercase">{v.title}</h3>
-            <p class="text-base sm:text-lg text-obrava-white font-display font-medium leading-relaxed">{v.body}</p>
+            <h3 class="text-xl sm:text-2xl font-display font-black mb-4 text-obrava-white uppercase">{v.title}</h3>
+            <p class="text-sm sm:text-base md:text-lg text-obrava-white font-display font-medium leading-relaxed">{v.body}</p>
           </div>
         ))}
       </div>
@@ -98,10 +98,10 @@ const stats = [
 
   <section class="section bg-obrava-orange text-obrava-black">
     <div class="container-brand">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6" data-stagger>
         {stats.map((s) => (
-          <div class="bg-obrava-black border-4 border-obrava-black p-4 sm:p-6 text-center">
-            <p class="text-4xl sm:text-5xl font-display font-black text-obrava-orange mb-2">{s.n}{s.suffix}</p>
+          <div data-reveal="pop" data-reveal-duration="700" class="bg-obrava-black border-4 border-obrava-black p-4 sm:p-6 text-center reveal-card">
+            <p class="text-3xl sm:text-4xl md:text-5xl font-display font-black text-obrava-orange mb-2">{s.n}{s.suffix}</p>
             <p class="font-mono text-xs uppercase tracking-wider text-obrava-white">{s.label}</p>
           </div>
         ))}

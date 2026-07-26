@@ -1,19 +1,15 @@
 ---
 // src/pages/index.astro
-// OBrava · Landing principal (v2)
-// Estructura editorial: Masthead → Promesas → 4 Servicios (split diptych) →
-// Proceso → Mantenimiento → Puntos Embajadores → FAQ (6) → CTA final.
+// OBrava · Landing principal (v2.1)
+// Animaciones: data-reveal en secciones estratégicas (fade-up, fade-left/right, scale, rotate, pop).
 import BaseLayout from '../layouts/BaseLayout.astro';
-import OBMonogram from '../components/OBMonogram.astro';
 import monogram3d from '../assets/logos/ob-monogram-3d.png';
 
 const whatsappLink = (msg: string) =>
   `https://wa.me/5352622265?text=${encodeURIComponent(msg)}`;
 
-// === HERO (masthead) ===
 const heroWhatsapp = whatsappLink('Hola OBrava, quiero pedir un presupuesto');
 
-// === PROMESAS ===
 const promises = [
   {
     n: '01',
@@ -35,7 +31,6 @@ const promises = [
   },
 ];
 
-// === SERVICIOS (4 paquetes · split diptych editorial) ===
 type Service = {
   id: string;
   num: string;
@@ -46,6 +41,7 @@ type Service = {
   proof: { kind: 'quote' | 'stat' | 'list'; quote?: string; attr?: string; stat?: string; statNote?: string; list?: string[] };
   flip: boolean;
   whatsappMsg: string;
+  reveal: 'fade-up' | 'fade-left' | 'fade-right' | 'rotate';
 };
 
 const services: Service[] = [
@@ -61,13 +57,10 @@ const services: Service[] = [
       ['Cerraduras', 'medio día'],
     ],
     cta: 'Pedir Manitas',
-    proof: {
-      kind: 'quote',
-      quote: 'Vinieron a cambiar el sifón el mismo día. Lo que otras cuadrillas habrían estirado toda la semana, OBrava lo resolvió en una mañana.',
-      attr: 'Yudith P. · Centro Habana',
-    },
+    proof: { kind: 'quote', quote: 'Vinieron a cambiar el sifón el mismo día. Lo que otras cuadrillas habrían estirado toda la semana, OBrava lo resolvió en una mañana.', attr: 'Yudith P. · Centro Habana' },
     flip: false,
     whatsappMsg: 'Hola, necesito un Manitas OBrava',
+    reveal: 'fade-left',
   },
   {
     id: 'reforma',
@@ -81,13 +74,10 @@ const services: Service[] = [
       ['Pintura interior', '3–7 días'],
     ],
     cta: 'Pedir Reforma',
-    proof: {
-      kind: 'stat',
-      stat: '7 días',
-      statNote: 'reforma de baño completa, sin retrasos',
-    },
+    proof: { kind: 'stat', stat: '7 días', statNote: 'reforma de baño completa, sin retrasos' },
     flip: true,
     whatsappMsg: 'Hola, quiero reformar mi baño/cocina/habitación',
+    reveal: 'fade-right',
   },
   {
     id: 'ampliacion',
@@ -101,17 +91,10 @@ const services: Service[] = [
       ['Techo / cubierta', '1–3 semanas'],
     ],
     cta: 'Pedir Ampliación',
-    proof: {
-      kind: 'list',
-      list: [
-        'Cimentación según estudio de suelo',
-        'Bloques, losa, instalaciones nuevas',
-        'Permisos y normativas vigentes',
-        'Garantía estructural de 5 años',
-      ],
-    },
+    proof: { kind: 'list', list: ['Cimentación según estudio de suelo', 'Bloques, losa, instalaciones nuevas', 'Permisos y normativas vigentes', 'Garantía estructural de 5 años'] },
     flip: false,
     whatsappMsg: 'Hola, quiero ampliar mi casa',
+    reveal: 'fade-left',
   },
   {
     id: 'llave-en-mano',
@@ -122,28 +105,16 @@ const services: Service[] = [
       ['Local comercial', 'según proyecto'],
       ['Hostal / Airbnb', 'según proyecto'],
       ['Oficina', 'según proyecto'],
-      ['Reforma integral vivienda', 'según proyecto'],
+      ['Reforma integral', 'según proyecto'],
     ],
     cta: 'Pedir Llave en Mano',
-    proof: {
-      kind: 'quote',
-      quote: 'Reformé la cocina entera. OBrava me enseñó cada paso con fotos. Sin sustos, sin extras. Recomendados 100%.',
-      attr: 'Carlos M. · Playa',
-    },
+    proof: { kind: 'quote', quote: 'Reformé la cocina entera. OBrava me enseñó cada paso con fotos. Sin sustos, sin extras. Recomendados 100%.', attr: 'Carlos M. · Playa' },
     flip: true,
     whatsappMsg: 'Hola, busco una obra llave en mano',
+    reveal: 'fade-right',
   },
 ];
 
-// === PROCESO (4 pasos) ===
-const steps = [
-  { n: '01', title: 'Captación', body: 'Nos escribes por WhatsApp. Si tienes foto, mejor.', highlight: false },
-  { n: '02', title: 'Visita', body: 'Vamos a la obra, medimos, evaluamos.', highlight: true },
-  { n: '03', title: 'Cotización', body: 'Presupuesto por escrito. Sin compromiso.', highlight: false },
-  { n: '04', title: 'Ejecución', body: 'Construimos en la fecha acordada.', highlight: false },
-];
-
-// === MANTENIMIENTO (Plan recurrente) ===
 const mantenimiento = {
   whatsappMsg: 'Hola, me interesa un plan de mantenimiento OBrava',
   list: [
@@ -154,7 +125,13 @@ const mantenimiento = {
   ],
 };
 
-// === PUNTOS EMBAJADORES (4 filas) ===
+const steps = [
+  { n: '01', title: 'Captación', body: 'Nos escribes por WhatsApp. Si tienes foto, mejor.', highlight: false },
+  { n: '02', title: 'Visita', body: 'Vamos a la obra, medimos, evaluamos.', highlight: true },
+  { n: '03', title: 'Cotización', body: 'Presupuesto por escrito. Sin compromiso.', highlight: false },
+  { n: '04', title: 'Entrega', body: 'Construimos en la fecha acordada.', highlight: false },
+];
+
 const puntos = [
   { num: '1 punto', copy: 'por cada 100 CUP gastados en una obra.' },
   { num: '+50 puntos', copy: 'por cada referido que cierre obra con nosotros.' },
@@ -162,32 +139,13 @@ const puntos = [
   { num: '5% off', copy: 'de por vida si traes a 5 amigos como Embajador OBrava.' },
 ];
 
-// === FAQ (6 preguntas) ===
 const faqs = [
-  {
-    q: '¿Cuánto cuesta la visita para cotizar?',
-    a: 'La visita y el presupuesto son gratis y sin compromiso. Si decides no avanzar, no te cobramos nada. Si avanzamos, el costo de la visita se descuenta del total.',
-  },
-  {
-    q: '¿Cómo se paga?',
-    a: 'Aceptamos USD efectivo, CUP, Transfermóvil y remesas (Tropipay, Cuballama). Para obras grandes, 30 % anticipo + 50 % avance + 20 % entrega. Para arreglos chicos, pago al terminar.',
-  },
-  {
-    q: '¿Cuánto demora una obra?',
-    a: 'Depende del tamaño. Un arreglo de plomería: 1 día. Una reforma de baño: 5–10 días. Una reforma integral: 4–8 semanas. Te lo decimos claro en el presupuesto.',
-  },
-  {
-    q: '¿Y si tengo un problema después de la obra?',
-    a: 'Activamos la garantía OBrava: 6 meses en mano de obra, 1 año en instalaciones. Volvemos sin coste. Sin letra pequeña.',
-  },
-  {
-    q: '¿Trabajan en toda La Habana?',
-    a: 'Sí. Toda La Habana y municipios cercanos. Para zonas más alejadas, consultamos.',
-  },
-  {
-    q: '¿Y los materiales?',
-    a: 'Dos opciones: (1) los compras tú y nosotros los usamos, o (2) los compramos nosotros y te los pasamos al costo en el presupuesto. Recomendamos la opción 2 para que no pierdas tiempo.',
-  },
+  { q: '¿Cuánto cuesta la visita para cotizar?', a: 'La visita y el presupuesto son gratis y sin compromiso. Si decides no avanzar, no te cobramos nada. Si avanzamos, el costo de la visita se descuenta del total.' },
+  { q: '¿Cómo se paga?', a: 'Aceptamos USD efectivo, CUP, Transfermóvil y remesas (Tropipay, Cuballama). Para obras grandes, 30 % anticipo + 50 % avance + 20 % entrega. Para arreglos chicos, pago al terminar.' },
+  { q: '¿Cuánto demora una obra?', a: 'Depende del tamaño. Un arreglo de plomería: 1 día. Una reforma de baño: 5–10 días. Una reforma integral: 4–8 semanas. Te lo decimos claro en el presupuesto.' },
+  { q: '¿Y si tengo un problema después de la obra?', a: 'Activamos la garantía OBrava: 6 meses en mano de obra, 1 año en instalaciones. Volvemos sin coste. Sin letra pequeña.' },
+  { q: '¿Trabajan en toda La Habana?', a: 'Sí. Toda La Habana y municipios cercanos. Para zonas más alejadas, consultamos.' },
+  { q: '¿Y los materiales?', a: 'Dos opciones: (1) los compras tú y nosotros los usamos, o (2) los compramos nosotros y te los pasamos al costo en el presupuesto. Recomendamos la opción 2 para que no pierdas tiempo.' },
 ];
 ---
 
@@ -196,20 +154,20 @@ const faqs = [
   description="OBrava · Brigada de construcción en La Habana. Presupuesto claro, fecha cierta, garantía escrita. Manitas, Reforma, Ampliación y Llave en Mano. Escríbenos por WhatsApp: +53 526 222 65."
 >
 
-  <!-- ============== HERO · MASTHEAD ============== -->
+  <!-- ============== HERO ============== -->
   <section class="bg-obrava-black border-b-8 border-obrava-orange relative overflow-hidden">
-    <div class="container-brand py-12 sm:py-16 lg:py-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-      <div class="lg:col-span-7 relative z-10">
-        <span class="eyebrow">La brigada que sí aparece</span>
+    <div class="container-brand py-10 sm:py-14 lg:py-20 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      <div class="lg:col-span-7 relative z-10" data-reveal="fade-up" data-reveal-duration="900">
+        <span class="eyebrow" data-reveal="pop" data-reveal-delay="100" data-reveal-duration="500">La brigada que sí aparece</span>
         <h1 class="text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter leading-[0.9] mb-6 sm:mb-8 text-balance">
           <span class="text-obrava-white">OB</span><span class="text-obrava-orange">RAVA.</span>
           <br />
           <span class="text-obrava-orange text-4xl sm:text-5xl lg:text-7xl">CUMPLIMOS.</span>
         </h1>
-        <p class="text-lg sm:text-xl lg:text-2xl mb-8 sm:mb-10 text-obrava-white font-bold max-w-xl leading-snug">
+        <p class="text-base sm:text-lg lg:text-2xl mb-6 sm:mb-8 text-obrava-white font-bold max-w-xl leading-snug" data-reveal="fade-up" data-reveal-delay="250">
           Presupuesto claro. Fecha cierta. Garantía escrita. Sin excusas.
         </p>
-        <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex flex-col sm:flex-row gap-3 sm:gap-4" data-reveal="fade-up" data-reveal-delay="400">
           <a href={heroWhatsapp} class="btn-primary">
             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
@@ -218,23 +176,23 @@ const faqs = [
           </a>
           <a href="#servicios" class="btn-secondary">Ver Servicios</a>
         </div>
-        <p class="font-mono text-xs uppercase tracking-wider text-obrava-orange mt-6">
+        <p class="font-mono text-xs uppercase tracking-wider text-obrava-orange mt-5 sm:mt-6" data-reveal="fade-up" data-reveal-delay="550">
           Respondemos en menos de 2h · Visita gratis
         </p>
       </div>
-      <div class="lg:col-span-5 hidden lg:flex justify-center items-center relative">
-        <div class="border-8 border-obrava-orange shadow-brutal p-4 bg-obrava-black">
+      <div class="lg:col-span-5 hidden lg:flex justify-center items-center relative" data-reveal="scale" data-reveal-duration="1100" data-reveal-delay="200">
+        <div class="border-8 border-obrava-orange shadow-brutal p-3 bg-obrava-black" data-parallax="0.08">
           <img
             src={monogram3d.src}
             alt="Monograma 3D OBrava — O naranja entrelazada con B de acero"
-            class="w-full h-auto max-w-md"
+            class="w-full h-auto max-w-md float-slow"
             width={monogram3d.width}
             height={monogram3d.height}
             loading="eager"
             decoding="async"
           />
         </div>
-        <div class="absolute -top-4 -right-4 hidden xl:block bg-obrava-orange text-obrava-black font-display font-black uppercase text-xs px-3 py-1 border-4 border-obrava-black shadow-brutal-white">
+        <div class="absolute -top-4 -right-4 hidden xl:block bg-obrava-orange text-obrava-black font-display font-black uppercase text-xs px-3 py-1 border-4 border-obrava-black shadow-brutal-white" data-reveal="rotate" data-reveal-delay="700">
           La Habana · 2026
         </div>
       </div>
@@ -244,25 +202,30 @@ const faqs = [
   <!-- ============== PROMESAS ============== -->
   <section class="section bg-obrava-gray" id="promesas">
     <div class="container-brand">
-      <div class="text-center mb-12 sm:mb-16">
-        <span class="eyebrow">Sin excusas</span>
-        <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight mb-4 text-obrava-orange text-balance">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="eyebrow" data-reveal="pop" data-reveal-duration="500">Sin excusas</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight mb-4 text-obrava-orange text-balance" data-reveal="fade-up" data-reveal-delay="100">
           Nuestras Promesas
         </h2>
-        <p class="text-obrava-white font-display font-bold text-lg sm:text-xl max-w-2xl mx-auto">
+        <p class="text-obrava-white font-display font-bold text-base sm:text-xl max-w-2xl mx-auto" data-reveal="fade-up" data-reveal-delay="200">
           Lo que decimos, lo firmamos. Lo que firmamos, lo cumplimos.
         </p>
       </div>
-      <div class="grid md:grid-cols-3 gap-6 sm:gap-8">
-        {promises.map((p) => (
-          <div class:list={[
-            'p-6 sm:p-8 border-4 transition-transform duration-150',
-            p.highlight
-              ? 'bg-obrava-orange text-obrava-black border-obrava-orange shadow-brutal-white md:-translate-y-2 hover:-translate-y-3'
-              : 'bg-obrava-black text-obrava-white border-obrava-orange shadow-brutal hover:-translate-y-2',
-          ]}>
+      <div class="grid md:grid-cols-3 gap-5 sm:gap-8" data-stagger>
+        {promises.map((p, i) => (
+          <div
+            data-reveal="fade-up"
+            data-reveal-delay={i * 150}
+            data-reveal-duration="900"
+            class:list={[
+              'reveal-card p-6 sm:p-8 border-4',
+              p.highlight
+                ? 'bg-obrava-orange text-obrava-black border-obrava-orange shadow-brutal-white md:-translate-y-2 hover:-translate-y-3'
+                : 'bg-obrava-black text-obrava-white border-obrava-orange shadow-brutal hover:-translate-y-2',
+            ]}
+          >
             <div class:list={[
-              'w-16 h-16 flex items-center justify-center mb-6 text-3xl font-display font-black border-4',
+              'w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center mb-5 sm:mb-6 text-2xl sm:text-3xl font-display font-black border-4',
               p.highlight
                 ? 'bg-obrava-black text-obrava-orange border-obrava-black'
                 : 'bg-obrava-orange text-obrava-black border-obrava-orange',
@@ -270,11 +233,11 @@ const faqs = [
               {p.n}
             </div>
             <h3 class:list={[
-              'text-2xl sm:text-3xl font-display font-black mb-4 uppercase',
+              'text-xl sm:text-2xl md:text-3xl font-display font-black mb-3 sm:mb-4 uppercase',
               p.highlight ? 'text-obrava-black' : 'text-obrava-white',
             ]}>{p.title}</h3>
             <p class:list={[
-              'text-base sm:text-lg leading-relaxed font-display',
+              'text-sm sm:text-base md:text-lg leading-relaxed font-display',
               p.highlight ? 'text-obrava-black font-bold' : 'text-obrava-white font-medium',
             ]}>{p.body}</p>
           </div>
@@ -286,33 +249,37 @@ const faqs = [
   <!-- ============== SERVICIOS · SPLIT DIPTYCH ============== -->
   <section class="section bg-obrava-black" id="servicios">
     <div class="container-brand">
-      <div class="mb-12 sm:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div class="mb-10 sm:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6">
         <div>
-          <span class="eyebrow">Lo que hacemos</span>
-          <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight mb-4 text-obrava-orange text-balance">
+          <span class="eyebrow" data-reveal="pop">Lo que hacemos</span>
+          <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight mb-3 sm:mb-4 text-obrava-orange text-balance" data-reveal="fade-up" data-reveal-delay="100">
             Servicios Técnicos
           </h2>
-          <p class="text-obrava-white font-display font-bold text-lg sm:text-xl max-w-2xl">
+          <p class="text-obrava-white font-display font-bold text-base sm:text-xl max-w-2xl" data-reveal="fade-up" data-reveal-delay="200">
             Cinco paquetes. Todos con la misma promesa: presupuesto claro, fecha cierta, garantía escrita.
           </p>
         </div>
       </div>
 
-      <div class="space-y-10 sm:space-y-12">
+      <div class="space-y-10 sm:space-y-14">
         {services.map((s) => (
-          <article id={s.id} class:list={[
-            'grid lg:grid-cols-2 gap-6 lg:gap-10 items-stretch',
-            s.flip ? 'lg:[&>:first-child]:order-2' : '',
-          ]}>
-            {/* Texto del servicio */}
-            <div class="bg-obrava-gray border-4 border-obrava-orange p-6 sm:p-8 shadow-brutal flex flex-col">
+          <article
+            id={s.id}
+            data-reveal={s.reveal}
+            data-reveal-duration="1000"
+            class:list={[
+              'grid lg:grid-cols-2 gap-5 sm:gap-8 lg:gap-10 items-stretch',
+              s.flip ? 'lg:[&>:first-child]:order-2' : '',
+            ]}
+          >
+            <div class="bg-obrava-gray border-4 border-obrava-orange p-5 sm:p-8 shadow-brutal flex flex-col reveal-card">
               <p class="font-mono text-xs uppercase tracking-wider text-obrava-orange mb-3">
                 {s.num} · Servicio
               </p>
-              <h3 class="text-2xl sm:text-3xl lg:text-4xl font-display font-black text-obrava-white uppercase mb-4">
+              <h3 class="text-xl sm:text-2xl lg:text-3xl font-display font-black text-obrava-white uppercase mb-4">
                 {s.title}
               </h3>
-              <p class="text-base sm:text-lg text-obrava-white font-display font-medium leading-relaxed mb-6">
+              <p class="text-sm sm:text-base text-obrava-white font-display font-medium leading-relaxed mb-5 sm:mb-6">
                 {s.intro}
               </p>
               <ul class="spec-list">
@@ -325,7 +292,7 @@ const faqs = [
               </ul>
               <a
                 href={whatsappLink(s.whatsappMsg)}
-                class="btn-primary mt-6 self-start"
+                class="btn-primary mt-5 sm:mt-6 self-start"
                 aria-label={`Pedir ${s.title} por WhatsApp`}
               >
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -335,8 +302,7 @@ const faqs = [
               </a>
             </div>
 
-            {/* Proof block */}
-            <aside class="bg-obrava-orange text-obrava-black border-4 border-obrava-orange shadow-brutal p-6 sm:p-8 flex flex-col justify-center">
+            <aside class="bg-obrava-orange text-obrava-black border-4 border-obrava-orange shadow-brutal p-5 sm:p-8 flex flex-col justify-center reveal-card">
               {s.proof.kind === 'quote' && (
                 <>
                   <p class="proof-quote">{s.proof.quote}</p>
@@ -345,16 +311,16 @@ const faqs = [
               )}
               {s.proof.kind === 'stat' && (
                 <div>
-                  <p class="font-display font-black text-7xl lg:text-8xl leading-none text-obrava-black tracking-tighter">
+                  <p class="font-display font-black text-6xl sm:text-7xl lg:text-8xl leading-none text-obrava-black tracking-tighter">
                     {s.proof.stat}
                   </p>
-                  <p class="font-display font-bold text-lg mt-4 max-w-sm">{s.proof.statNote}</p>
+                  <p class="font-display font-bold text-base sm:text-lg mt-3 sm:mt-4 max-w-sm">{s.proof.statNote}</p>
                 </div>
               )}
               {s.proof.kind === 'list' && (
                 <>
                   <p class="font-mono text-xs uppercase tracking-wider text-obrava-black mb-4">Incluye</p>
-                  <ul class="space-y-3 font-display font-bold text-obrava-black text-lg">
+                  <ul class="space-y-2.5 sm:space-y-3 font-display font-bold text-obrava-black text-base sm:text-lg">
                     {s.proof.list?.map((item) => (
                       <li class="flex items-start gap-3">
                         <span class="shrink-0 w-6 h-6 bg-obrava-black text-obrava-orange font-display font-black flex items-center justify-center mt-0.5">✓</span>
@@ -368,16 +334,13 @@ const faqs = [
           </article>
         ))}
 
-        {/* Mantenimiento · 5to servicio en estilo split */}
-        <article id="mantenimiento" class="grid lg:grid-cols-2 gap-6 lg:gap-10 items-stretch">
-          <div class="bg-obrava-gray border-4 border-obrava-orange p-6 sm:p-8 shadow-brutal flex flex-col">
-            <p class="font-mono text-xs uppercase tracking-wider text-obrava-orange mb-3">
-              05 · Plan recurrente
-            </p>
-            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-display font-black text-obrava-white uppercase mb-4">
+        <article id="mantenimiento" data-reveal="fade-up" data-reveal-duration="1000" class="grid lg:grid-cols-2 gap-5 sm:gap-8 lg:gap-10 items-stretch">
+          <div class="bg-obrava-gray border-4 border-obrava-orange p-5 sm:p-8 shadow-brutal flex flex-col reveal-card">
+            <p class="font-mono text-xs uppercase tracking-wider text-obrava-orange mb-3">05 · Plan recurrente</p>
+            <h3 class="text-xl sm:text-2xl lg:text-3xl font-display font-black text-obrava-white uppercase mb-4">
               Plan de Mantenimiento
             </h3>
-            <p class="text-base sm:text-lg text-obrava-white font-display font-medium leading-relaxed mb-6">
+            <p class="text-sm sm:text-base text-obrava-white font-display font-medium leading-relaxed mb-5 sm:mb-6">
               Para propiedades en alquiler. Una visita mensual, reporte con fotos, y atención prioritaria ante cualquier urgencia. Para que tu Airbnb no se caiga a las 3am.
             </p>
             <ul class="spec-list">
@@ -388,7 +351,7 @@ const faqs = [
             </ul>
             <a
               href={whatsappLink(mantenimiento.whatsappMsg)}
-              class="btn-primary mt-6 self-start"
+              class="btn-primary mt-5 sm:mt-6 self-start"
             >
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
@@ -396,9 +359,9 @@ const faqs = [
               Preguntar por el plan →
             </a>
           </div>
-          <aside class="bg-obrava-black border-4 border-obrava-orange shadow-brutal p-6 sm:p-8 flex flex-col justify-center">
+          <aside class="bg-obrava-black border-4 border-obrava-orange shadow-brutal p-5 sm:p-8 flex flex-col justify-center reveal-card">
             <p class="font-mono text-xs uppercase tracking-wider text-obrava-orange mb-4">Para hosts de Airbnb y propiedades en alquiler</p>
-            <ul class="space-y-3 font-display font-bold text-obrava-white text-lg">
+            <ul class="space-y-2.5 sm:space-y-3 font-display font-bold text-obrava-white text-base sm:text-lg">
               {mantenimiento.list.map((item) => (
                 <li class="flex items-start gap-3">
                   <span class="shrink-0 w-6 h-6 bg-obrava-orange text-obrava-black font-display font-black flex items-center justify-center mt-0.5">—</span>
@@ -412,38 +375,40 @@ const faqs = [
     </div>
   </section>
 
-  <!-- ============== PROCESO · 4 PASOS ============== -->
+  <!-- ============== PROCESO ============== -->
   <section class="section bg-obrava-orange text-obrava-black" id="proceso">
     <div class="container-brand">
-      <div class="text-center mb-12 sm:mb-16">
-        <span class="inline-block bg-obrava-black text-obrava-orange font-mono text-xs uppercase tracking-wider px-3 py-1 border-2 border-obrava-black mb-4">
-          El protocolo
-        </span>
-        <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight mb-4 text-obrava-black text-balance">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="inline-block bg-obrava-black text-obrava-orange font-mono text-xs uppercase tracking-wider px-3 py-1 border-2 border-obrava-black mb-4" data-reveal="pop">El protocolo</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight mb-3 sm:mb-4 text-obrava-black text-balance" data-reveal="fade-up" data-reveal-delay="100">
           Cómo Trabajamos
         </h2>
-        <p class="text-obrava-black font-display font-bold text-lg sm:text-xl max-w-2xl mx-auto">
+        <p class="text-obrava-black font-display font-bold text-base sm:text-xl max-w-2xl mx-auto" data-reveal="fade-up" data-reveal-delay="200">
           Cuatro pasos, del WhatsApp a la obra entregada.
         </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-6 relative">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 relative" data-stagger>
         <div class="hidden md:block absolute top-1/2 left-0 w-full h-2 bg-obrava-black -z-10 transform -translate-y-1/2"></div>
         {steps.map((s) => (
-          <div class:list={[
-            'p-6 text-center border-4 relative z-0',
-            s.highlight
-              ? 'bg-obrava-black text-obrava-white border-obrava-black scale-105 shadow-brutal-white'
-              : 'bg-obrava-white text-obrava-black border-obrava-black',
-          ]}>
+          <div
+            data-reveal="pop"
+            data-reveal-duration="700"
+            class:list={[
+              'p-4 sm:p-6 text-center border-4 reveal-card',
+              s.highlight
+                ? 'bg-obrava-black text-obrava-white border-obrava-black scale-105 shadow-brutal-white'
+                : 'bg-obrava-white text-obrava-black border-obrava-black',
+            ]}
+          >
             <div class:list={[
-              'w-14 h-14 font-display font-black flex items-center justify-center mx-auto mb-4 text-2xl border-4',
+              'w-12 h-12 sm:w-14 sm:h-14 font-display font-black flex items-center justify-center mx-auto mb-3 sm:mb-4 text-xl sm:text-2xl border-4',
               s.highlight
                 ? 'bg-obrava-orange text-obrava-black border-obrava-orange shadow-brutal-small-white'
                 : 'bg-obrava-black text-obrava-orange border-obrava-black',
             ]}>{s.n}</div>
-            <h3 class="text-xl sm:text-2xl font-display font-black mb-2 uppercase">{s.title}</h3>
+            <h3 class="text-base sm:text-xl md:text-2xl font-display font-black mb-1.5 sm:mb-2 uppercase">{s.title}</h3>
             <p class:list={[
-              'text-sm sm:text-base font-display',
+              'text-xs sm:text-sm md:text-base font-display',
               s.highlight ? 'text-obrava-white font-medium' : 'text-obrava-black font-bold',
             ]}>{s.body}</p>
           </div>
@@ -457,24 +422,22 @@ const faqs = [
     <div class="container-brand">
       <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
         <div>
-          <span class="inline-block bg-obrava-orange text-obrava-black font-mono text-xs uppercase tracking-wider px-3 py-1 border-2 border-obrava-orange mb-4">
-            Embajadores OBrava
-          </span>
-          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4 sm:mb-6 text-obrava-white text-balance">
+          <span class="inline-block bg-obrava-orange text-obrava-black font-mono text-xs uppercase tracking-wider px-3 py-1 border-2 border-obrava-orange mb-4" data-reveal="pop">Embajadores OBrava</span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-4 sm:mb-6 text-obrava-white text-balance" data-reveal="fade-up" data-reveal-delay="100">
             Cada obra te convierte en Embajador.
           </h2>
-          <p class="text-lg sm:text-xl text-obrava-white font-display font-bold max-w-xl">
+          <p class="text-base sm:text-xl text-obrava-white font-display font-bold max-w-xl" data-reveal="fade-up" data-reveal-delay="200">
             Gana puntos, descuentos y beneficios exclusivos por confiar y recomendar. Sin tarjeta, sin app — te los descuenta tu socio administrador cuando vuelvas.
           </p>
         </div>
-        <div class="bg-obrava-gray border-4 border-obrava-orange shadow-brutal p-6 sm:p-8">
+        <div class="bg-obrava-gray border-4 border-obrava-orange shadow-brutal p-5 sm:p-8" data-reveal="fade-left" data-reveal-duration="900">
           <div class="space-y-0 divide-y-2 divide-obrava-silver">
             {puntos.map((p) => (
-              <div class="flex justify-between items-center py-4">
+              <div class="flex justify-between items-center py-3 sm:py-4 gap-3">
                 <span class="font-mono text-xs sm:text-sm uppercase tracking-wider text-obrava-orange">
                   {p.copy}
                 </span>
-                <span class="font-display font-black text-xl sm:text-2xl text-obrava-white whitespace-nowrap ml-4">
+                <span class="font-display font-black text-lg sm:text-2xl text-obrava-white whitespace-nowrap">
                   {p.num}
                 </span>
               </div>
@@ -482,7 +445,7 @@ const faqs = [
           </div>
           <a
             href={whatsappLink('Hola, quiero ser parte del programa Embajadores OBrava')}
-            class="mt-6 inline-flex items-center justify-center w-full bg-obrava-orange text-obrava-black font-display font-black uppercase tracking-wider px-6 py-3 border-4 border-obrava-orange shadow-brutal-white hover:shadow-brutal-small-white hover:translate-x-1 hover:translate-y-1 transition-all text-sm"
+            class="mt-5 sm:mt-6 inline-flex items-center justify-center w-full bg-obrava-orange text-obrava-black font-display font-black uppercase tracking-wider px-6 py-3 border-4 border-obrava-orange shadow-brutal-white hover:shadow-brutal-small-white hover:translate-x-1 hover:translate-y-1 transition-all text-sm"
           >
             Empezar a ganar puntos →
           </a>
@@ -491,28 +454,32 @@ const faqs = [
     </div>
   </section>
 
-  <!-- ============== FAQ · 6 PREGUNTAS ============== -->
+  <!-- ============== FAQ ============== -->
   <section class="section bg-obrava-gray" id="faq">
     <div class="container-brand max-w-4xl">
-      <div class="text-center mb-12 sm:mb-16">
-        <span class="eyebrow">Dudas frecuentes</span>
-        <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight mb-4 text-obrava-orange text-balance">
+      <div class="text-center mb-10 sm:mb-16">
+        <span class="eyebrow" data-reveal="pop">Dudas frecuentes</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight mb-3 sm:mb-4 text-obrava-orange text-balance" data-reveal="fade-up" data-reveal-delay="100">
           Preguntas Frecuentes
         </h2>
-        <p class="text-obrava-white font-display font-bold text-lg sm:text-xl">
+        <p class="text-obrava-white font-display font-bold text-base sm:text-xl" data-reveal="fade-up" data-reveal-delay="200">
           Resolvemos tus dudas antes de empezar.
         </p>
       </div>
-      <div class="space-y-4 sm:space-y-6">
+      <div class="space-y-3 sm:space-y-4" data-stagger>
         {faqs.map((faq) => (
-          <details class="group bg-obrava-black border-4 border-obrava-orange shadow-brutal p-6 cursor-pointer">
-            <summary class="flex justify-between items-center font-display font-black text-lg sm:text-2xl text-obrava-white uppercase list-none gap-4">
+          <details
+            data-reveal="fade-up"
+            data-reveal-duration="700"
+            class="group bg-obrava-black border-4 border-obrava-orange shadow-brutal p-4 sm:p-6 cursor-pointer reveal-card"
+          >
+            <summary class="flex justify-between items-center font-display font-black text-base sm:text-xl md:text-2xl text-obrava-white uppercase list-none gap-3 sm:gap-4">
               <span class="text-balance">{faq.q}</span>
-              <span class="material-symbols-outlined transition-transform duration-300 border-4 border-obrava-orange bg-obrava-orange text-obrava-black p-1 font-black shrink-0" style="font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 48;">
+              <span class="material-symbols-outlined transition-transform duration-300 border-4 border-obrava-orange bg-obrava-orange text-obrava-black p-1 font-black shrink-0 group-open:rotate-180" style="font-variation-settings: 'FILL' 0, 'wght' 600, 'GRAD' 0, 'opsz' 48;" aria-hidden="true">
                 expand_more
               </span>
             </summary>
-            <div class="mt-4 sm:mt-6 text-obrava-white font-display font-medium leading-relaxed bg-obrava-gray p-4 sm:p-6 border-4 border-obrava-orange text-base sm:text-lg">
+            <div class="mt-3 sm:mt-4 text-obrava-white font-display font-medium leading-relaxed bg-obrava-gray p-4 sm:p-6 border-4 border-obrava-orange text-sm sm:text-base md:text-lg">
               {faq.a}
             </div>
           </details>
@@ -524,14 +491,14 @@ const faqs = [
   <!-- ============== CTA FINAL ============== -->
   <section class="section bg-obrava-black">
     <div class="container-brand text-center">
-      <span class="eyebrow">¿Listo para empezar?</span>
-      <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight mb-4 sm:mb-6 text-obrava-white uppercase text-balance">
+      <span class="eyebrow" data-reveal="pop">¿Listo para empezar?</span>
+      <h2 class="text-3xl sm:text-4xl lg:text-6xl font-black tracking-tight mb-4 sm:mb-6 text-obrava-white uppercase text-balance" data-reveal="fade-up" data-reveal-delay="100">
         ¿Tienes una obra en mente?
       </h2>
-      <p class="text-lg sm:text-xl mb-8 sm:mb-10 text-obrava-white font-display font-bold max-w-2xl mx-auto">
+      <p class="text-base sm:text-xl mb-8 sm:mb-10 text-obrava-white font-display font-bold max-w-2xl mx-auto" data-reveal="fade-up" data-reveal-delay="200">
         Escríbenos por WhatsApp. Te respondemos en menos de 2 horas. La visita es gratis.
       </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center" data-reveal="fade-up" data-reveal-delay="300">
         <a href={heroWhatsapp} class="btn-primary text-base sm:text-lg">
           <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
@@ -542,7 +509,7 @@ const faqs = [
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.24 1.01l-2.21 2.21Z"/>
           </svg>
-          Llamar 052 622 265
+          Llamar 052622265
         </a>
         <a href="mailto:sandyllerena77@gmail.com" class="btn-ghost-orange">
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

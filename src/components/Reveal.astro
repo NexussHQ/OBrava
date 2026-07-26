@@ -1,0 +1,90 @@
+---
+// Reveal.astro
+// Componente "decorator" que solo emite un <script> global con IntersectionObserver.
+// Para animar elementos: añadir `data-reveal="fade-up|fade-left|fade-right|scale|rotate|pop"`
+// y opcionalmente `data-reveal-delay="200"` (ms) y `data-reveal-duration="900"` (ms).
+// El CSS vive en global.css bajo `[data-reveal]`.
+---
+<script>
+  // === Reveal on scroll (con respeto a prefers-reduced-motion) ===
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const reveals = document.querySelectorAll<HTMLElement>('[data-reveal]');
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const delay = parseInt(el.dataset.revealDelay || '0', 10);
+            const dur = el.dataset.revealDuration;
+            if (delay) el.style.setProperty('--reveal-delay', `${delay}ms`);
+            if (dur) el.style.setProperty('--reveal-duration', `${dur}ms`);
+            el.classList.add('is-visible');
+            io.unobserve(el);
+          }
+        }
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
+    );
+    reveals.forEach((el) => io.observe(el));
+  } else {
+    // Reduced motion o no IO: todo visible al instante
+    document.querySelectorAll<HTMLElement>('[data-reveal]').forEach((el) =>
+      el.classList.add('is-visible')
+    );
+  }
+
+  // === Counter up (para stats tipo "6m", "<2h", "24/7") ===
+  const counters = document.querySelectorAll<HTMLElement>('[data-counter]');
+  if (!reduceMotion && counters.length && 'IntersectionObserver' in window) {
+    const co = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const target = parseFloat(el.dataset.counter || '0');
+            const suffix = el.dataset.counterSuffix || '';
+            const dur = parseInt(el.dataset.counterDur || '1200', 10);
+            const start = performance.now();
+            const tick = (now: number) => {
+              const t = Math.min(1, (now - start) / dur);
+              const eased = 1 - Math.pow(1 - t, 3);
+              const val = target * eased;
+              el.textContent = `${Number.isInteger(target) ? Math.round(val) : val.toFixed(1)}${suffix}`;
+              if (t < 1) requestAnimationFrame(tick);
+              else el.textContent = `${target}${suffix}`;
+            };
+            requestAnimationFrame(tick);
+            co.unobserve(el);
+          }
+        }
+      },
+      { threshold: 0.4 }
+    );
+    counters.forEach((el) => co.observe(el));
+  }
+
+  // === Parallax sutil en hero images (sólo en desktop) ===
+  const parallax = document.querySelectorAll<HTMLElement>('[data-parallax]');
+  if (!reduceMotion && parallax.length && window.matchMedia('(min-width: 1024px)').matches) {
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        for (const el of parallax) {
+          const rect = el.getBoundingClientRect();
+          const speed = parseFloat(el.dataset.parallax || '0.15');
+          if (rect.bottom > 0 && rect.top < window.innerHeight) {
+            const offset = (rect.top - window.innerHeight / 2) * speed;
+            el.style.setProperty('--parallax-y', `${offset.toFixed(1)}px`);
+          }
+        }
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+</script>
